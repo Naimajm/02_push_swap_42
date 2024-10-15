@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 20:43:29 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/14 21:19:25 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/15 11:08:54 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,36 @@ Atención si la pila src está vacía (NULL).
 */
 static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 {
-    t_stack *node_tmp; // puntero temporal
+    t_stack *node_tmp; // puntero temporal para manipular en stack src
 
 	//printf("ft_push() -> stack_src -> %p \n", stack_src);
 	//printf("ft_push() -> stack_dest -> %p \n", stack_dest);
 	//printf("ft_push() -> *stack_src -> %p \n", *stack_src);
 	
     // VALIDACION INICIAL
-	if (*stack_src == NULL)
+	if (*stack_src == NULL || *stack_dest == NULL)
 		return ;
 		
-	node_tmp = (*stack_src)->next; // apunta al 2º elemento del stack origen
+	node_tmp = (*stack_src)->next; // stack src -> apunta al 2º nodo del stack origen
 	//printf("ft_push() -> node_tmp -> %p \n", node_tmp);
 
-	// Asigna el 1º elemento del stack origen como el nuevo 1º elemento del stack destino.
-	(*stack_src)->next = *stack_dest; // engancha nuevo 1º elem (src) a antiguo 1º elem de dest
-	//printf("ft_push() -> (*stack_src)->next -> %p \n", (*stack_src)->next);
+	node_tmp->prev = NULL; // stack src -> desconectar antiguo 2º nodo y conectar a nulo
 
-	*stack_dest = *stack_src; // puntero stack dest apunta a nuevo 1º elemento
+	// Asigna el 1º nodo del stack origen como el nuevo 1º nodo del stack destino.
+	(*stack_src)->next = *stack_dest; // stack dest -> engancha nuevo 1º nodo dest (src) a antiguo 1º nodo de dest
+	//printf("ft_push() -> (*stack_src)->next -> %p \n", (*stack_src)->next);0
+
+	(*stack_dest)->prev = *stack_src; // stack dest -> conectar prev antiguo 1º nodo a nuevo 1º nodo
+
+	*stack_dest = *stack_src; // puntero stack dest apunta a nuevo 1º nodo
 	//printf("ft_push() -> *stack_dest  -> %p \n", *stack_dest );
 
-	// Apunta el puntero del stack origen al nuevo 1º elem (antiguo 2º elem), guardado en el puntero temporal node_tmp
+	// Apunta el puntero del stack origen al nuevo 1º nodo (antiguo 2º elem), guardado en el puntero temporal node_tmp
 	*stack_src = node_tmp;	
 	//printf("ft_push() -> *stack_src  -> %p \n", *stack_src );
 }
 
-/* int	main(void)
+int	main(void)
 {
 	t_stack *stack_a;
 	t_stack *stack_b;
@@ -77,7 +81,7 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	char	*arg_num_stack_b[4] = { arg_num_stack_b[0]= "0", arg_num_stack_b[1]= "1", arg_num_stack_b[2] = "2", arg_num_stack_b[3]= "3" };
 	stack_init(&stack_b, arg_num_stack_b + 1, false);
 
-	// ESTADO INICIAL STACKS
+	/* // ESTADO INICIAL STACKS
 	printf("ESTADO INICIAL STACKS \n");
 	while (stack_a)
 	{
@@ -93,7 +97,7 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	// REINICIALIZACION punteros !!	
 	stack_init(&stack_a, arg_num_stack_a + 1, false);
 	//stack_b = NULL;
-	stack_init(&stack_b, arg_num_stack_b + 1, false);
+	stack_init(&stack_b, arg_num_stack_b + 1, false); */
 
 	printf("stack_init() -> puntero (*stack_a) a 1º NODO-> %p \n", stack_a);
 	printf("stack_init() -> puntero (*stack_a) a 1º NODO-> %p \n", stack_b);
@@ -118,7 +122,7 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 		stack_b = stack_b->next;
 	}
 
-	printf("\ntack_init() -> return puntero stack a (*stack_a) -> %p \n", stack_a);
+	printf("\nstack_init() -> return puntero stack a (*stack_a) -> %p \n", stack_a);
 	printf("stack_init() -> return puntero stack b (*stack_b) -> %p \n", stack_b);
 	return (0);
-} */
+}
