@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:32:35 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/15 13:47:51 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:42:21 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static void ft_swap(t_stack **stack)
     new_second_node->prev = new_first_node;    
     printf("new_second_node->prev-> %p \n", new_second_node->prev);
 }
-
+/* 
 int	main(void)
 {
 	t_stack *stack_a;
@@ -108,4 +108,4 @@ int	main(void)
     
 	printf("\nstack_init() -> return puntero stack a (*stack_a) -> %p \n", stack_a);
 	return (0);
-}
+} */

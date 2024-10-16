@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:03:11 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/14 22:15:08 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 11:12:50 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ Atención si la pila src está vacía (NULL).
 */
 static void ft_rotate(t_stack **stack)
 {
-    t_stack *last_node;
+    t_stack *node_to_rotate; // 1º nodo a mover
+    t_stack *last_node;    
     int stack_len;
 
     // VALIDACION INICIAL (no stack o no puntero stack)
@@ -55,17 +56,26 @@ static void ft_rotate(t_stack **stack)
     // VERIFICACION  TAMAÑO STACK MAYOR Q 1
     if (stack_len < 2)
         return ;
+
+    node_to_rotate = *stack; 
+    printf("first_node-> %p \n", node_to_rotate);
     last_node = ft_find_last_node(*stack);
+    printf("last_node-> %p \n", last_node);    
 
     // TRANSFORMACION
-    last_node->next = *stack; // conexion ultimo nodo next a 1º nodo
-    *stack = (*stack)->next; // ptr stack a 2º nodo
-    (*stack)->prev = NULL; // NUEVO 1º nodo -> prev a '0'
-    last_node->next->prev = last_node;  // conexion del nuevo ultimo nodo al antiguo ultimo nodo
-    last_node->next->next = NULL; // conexion nuevo ultimo nodo a nulo
-}
+    last_node->next = node_to_rotate; // conexion ultimo nodo next a 1º nodo
 
-/* int main(void)
+    *stack = node_to_rotate->next; // ptr stack a 2º nodo (nuevo 1º nodo)
+    (*stack)->prev = NULL; // NUEVO 1º nodo -> prev a '0'
+    printf("nuevo 1º nodo-> \t prev -> %p \t address -> %p \t next -> %p \n", (*stack)->prev, *stack, (*stack)->next);
+
+    node_to_rotate->prev = last_node;  // conexion del nuevo ultimo nodo al antiguo ultimo nodo
+    node_to_rotate->next = NULL; // conexion nuevo ultimo nodo a nulo
+    printf("antiguo ultimo nodo-> \t prev -> %p \t address -> %p \t next -> %p \n", last_node->prev, last_node, last_node->next);
+    printf("nuevo ultimo nodo-> \t prev -> %p \t address -> %p \t next -> %p \n", node_to_rotate->prev, node_to_rotate, node_to_rotate->next);
+}
+/* 
+int main(void)
 {
     t_stack *stack_a;
     t_stack *initial_stack;
