@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:48 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/14 22:23:46 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:14:00 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 
 #include <stdio.h>  // printf
 
-# include <stdbool.h> // bool
+# include <stdbool.h> // booleanos
 # include <limits.h> // VALORES INT_MIN INT_MAX
 
 // ESTRUCTURA DATOS -> LISTA VINCULADA -> STACKS / PILAS
@@ -30,11 +30,13 @@ typedef struct s_stack
 	int	current_position;
 	int	final_index; // indice
 
+	struct	s_stack	*target_node;
 	struct	s_stack	*prev;
 	struct	s_stack	*next;	
 }					t_stack;
 
-// FUNCTIONS PROTOTYPES push_swap project.
+// FUNCIONES CONTRUCCION PILA (STACK)  ---------------------------
+// ---------------------------------------------------------------
 
 // ARCHIVO 'stack_init.c' -----------------------------
 void	stack_init(t_stack **stack, char **argv, bool flag_argc_2);
@@ -54,6 +56,9 @@ Cuenta el número de nodos de un stack.
 * @returns int -> Número de nodos del stack.
 */
 int	ft_stack_len(t_stack *stack);
+
+// FUNCIONES FUNCIONES PERMITIDAS ORDENACION NODOS  ---------------------------
+// ---------------------------------------------------------------
 
 // ARCHIVO 'command_push.c' -----------------------------
 
@@ -108,10 +113,28 @@ void    rr(t_stack **stack_a, t_stack **stack_b, bool checker);
 // ARCHIVO 'command_reverse_rotate.c' --------------------------
 
 void    rra(t_stack **stack_a, bool checker);
-
 void    rrb(t_stack **stack_b, bool checker);
-
 void    rrr(t_stack **stack_a, t_stack **stack_b, bool checker);
+
+// ARCHIVO 'command_swap.c' --------------------------
+
+void    sa(t_stack **stack_a, bool checker);
+void    sb(t_stack **stack_b, bool checker);
+void    ss(t_stack **stack_a, t_stack **stack_b, bool checker);
+
+// FUNCIONES FUNCIONES PERMITIDAS ORDENACION NODOS  ---------------------
+// ---------------------------------------------------------------
+
+// ARCHIVO 'sort_min.c' --------------------------
+
+/*
+ * Cuando tengo 3 nodos, es fácil de ordenar
+ * ~Si el 1* es el más grande, ra (de mayor a inferior)
+ * ~Si el 2* es el más grande, rra (de mayor a abajo)
+ * ~ Ahora tengo con fuerza el más grande en la parte inferior.
+ * entonces solo reviso 1° y 2°
+*/
+void tiny_sort(t_stack **stack);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 12:28:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 13:37:13 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:30:41 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,7 @@
 
 static t_stack	*find_highest_node(t_stack *stack);
 
-/*
- * Cuando tengo 3 nodos, es fácil de ordenar
- * ~Si el 1* es el más grande, ra (de mayor a inferior)
- * ~Si el 2* es el más grande, rra (de mayor a abajo)
- * ~ Ahora tengo con fuerza el más grande en la parte inferior.
- * entonces solo reviso 1° y 2°
-*/
+
 void tiny_sort(t_stack **stack)
 {
 	t_stack	*first_node;
