@@ -1,5 +1,5 @@
-REFERENCIAS ->
-intro -> https://42-cursus.gitbook.io/guide/rank-02/push_swap/building-the-thing
+## REFERENCIAS ->
+# intro -> https://42-cursus.gitbook.io/guide/rank-02/push_swap/building-the-thing
 concepto lista vinculada -> https://es.wikipedia.org/wiki/Lista_enlazada
 Algoritmo -> Oceano
 https://www.youtube.com/watch?v=OaG81sDEpVk&ab_channel=Oceano
