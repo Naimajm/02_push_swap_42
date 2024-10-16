@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 22:05:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/14 22:23:56 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/15 10:44:33 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,15 +50,15 @@ static void ft_reverse_rotate(t_stack **stack)
         return ;
 
     last_node = ft_find_last_node(*stack);
-    last_node->prev->next = NULL; 
-    last_node->prev = NULL;
-    last_node->next = *stack;
+    last_node->prev->next = NULL; // desconectar -> conectar nuevo ultimo nodo a '\0'    
+    last_node->prev = NULL; // desconectar -> conectar nuevo primer nodo a nulo
 
-    (*stack)->prev = last_node;
-    *stack = last_node;      
+    last_node->next = *stack; // conectar antiguo ultimo nodo a antiguo 1º nodo    
+    *stack = last_node;  // NUEVO PUNTERO STACK  a nuevo 1º nodo
+    last_node->next->prev = last_node; // conectar antiguo 1º nodo a nuevo 1º nodo        
 }
 
-int main(void)
+/* int main(void)
 {
     t_stack *stack_a;
     t_stack *initial_stack;
@@ -80,7 +80,6 @@ int main(void)
 
     // TRANSFORMACION
     printf("\nPROCESO TRANSFORMACION --------\n");
-
     //ft_reverse_rotate(&stack_a);
     rra(&stack_a, false);
     
@@ -93,4 +92,4 @@ int main(void)
         stack_a = stack_a->next;
     }
     return (0);
-}
+} */

@@ -6,15 +6,13 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 20:43:29 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/15 11:08:54 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/15 12:47:25 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # include "push_swap.h"
 
 static  void ft_push(t_stack **stack_dest, t_stack **stack_src);
-
-// OPERACIONES PERMITIDAS PARA ALGORITMO ORDENACION
 
 void    pa(t_stack **stack_a, t_stack **stack_b, bool checker)
 {
@@ -32,72 +30,66 @@ void    pb(t_stack **stack_b, t_stack **stack_a, bool checker)
 
 /** 
 * @brief Empujar un nodo hacia la parte superior desde src hasta destino.
-Atención si la pila src está vacía (NULL).
+Atención si la pila src está vacía (NULL). Planteamiento con stack dest 
+vacio o con algun nodo existente.
 * @param stack_dest: puntero a stack destino.
 * @param stack_src: puntero a stack origen.
 * @returns void.
 */
 static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 {
-    t_stack *node_tmp; // puntero temporal para manipular en stack src
+	t_stack *node_to_push;
 
-	//printf("ft_push() -> stack_src -> %p \n", stack_src);
-	//printf("ft_push() -> stack_dest -> %p \n", stack_dest);
-	//printf("ft_push() -> *stack_src -> %p \n", *stack_src);
-	
-    // VALIDACION INICIAL
-	if (*stack_src == NULL || *stack_dest == NULL)
+	// VALIDACION INICIAL (stack b  podria ser nulo)
+	if ( *stack_src == NULL )
 		return ;
-		
-	node_tmp = (*stack_src)->next; // stack src -> apunta al 2º nodo del stack origen
-	//printf("ft_push() -> node_tmp -> %p \n", node_tmp);
 
-	node_tmp->prev = NULL; // stack src -> desconectar antiguo 2º nodo y conectar a nulo
+	// stack src -> nodo temporal apunta al 1º nodo stack origen que
+	// va a ser empujado a stack dest
+	node_to_push = *stack_src; 
+	printf("node_to_push -> %p \n", node_to_push);
 
-	// Asigna el 1º nodo del stack origen como el nuevo 1º nodo del stack destino.
-	(*stack_src)->next = *stack_dest; // stack dest -> engancha nuevo 1º nodo dest (src) a antiguo 1º nodo de dest
-	//printf("ft_push() -> (*stack_src)->next -> %p \n", (*stack_src)->next);0
+	// stack src -> desconectar nuevo 1º nodo src y conectar a nulo
+	node_to_push->next->prev = NULL;
 
-	(*stack_dest)->prev = *stack_src; // stack dest -> conectar prev antiguo 1º nodo a nuevo 1º nodo
+	// stack src -> apuntar puntero stack a nuevo 1º nodo
+	*stack_src =  node_to_push->next;
+	printf("*stack_src -> %p \n", *stack_src);
 
-	*stack_dest = *stack_src; // puntero stack dest apunta a nuevo 1º nodo
-	//printf("ft_push() -> *stack_dest  -> %p \n", *stack_dest );
+	// STACK DESTINO SIN NODOS EXISTENTES o CON NODOS EXISTENTE
+	if ( *stack_dest == NULL )
+	{
+		// stack dest -> conectar nuevo 1º nodo a nulo
+		node_to_push->next = NULL;		
+	}
+	else
+	{
+		// stack dest -> conectar nuevo 1º nodo a antiguo 1º nodo 
+		node_to_push->next = *stack_dest;
+		printf("node_to_push->next-> %p \n", node_to_push->next);
 
-	// Apunta el puntero del stack origen al nuevo 1º nodo (antiguo 2º elem), guardado en el puntero temporal node_tmp
-	*stack_src = node_tmp;	
-	//printf("ft_push() -> *stack_src  -> %p \n", *stack_src );
+		// stack dest -> desconectar antiguo 1º nodo->prev y conectar nuevo
+		// 1º nodo
+		node_to_push->next->prev = node_to_push;
+		printf("node_to_push->next->prev-> %p \n", (*stack_dest)->prev);		
+	}
+		// stack dest -> apuntar ptr stack dest a nuevo 1º nodo
+		*stack_dest = node_to_push;
+		printf("*stack_dest-> %p \n", *stack_dest);	
 }
 
-int	main(void)
+/* int	main(void)
 {
 	t_stack *stack_a;
 	t_stack *stack_b;
-	//stack_b = NULL;
 
-	// INICIALIZACION STACK_A
+	// INICIALIZACION STACK_A + STACK B
 	char	*arg_num_stack_a[4] = { arg_num_stack_a[0]= "0", arg_num_stack_a[1]= "4", arg_num_stack_a[2] = "5", arg_num_stack_a[3]= "6" };    
 	stack_init(&stack_a, arg_num_stack_a + 1, false);
 
+	//stack_b = NULL;  // OPCION STACK DESTINO SIN NODOS EXISTENTES
 	char	*arg_num_stack_b[4] = { arg_num_stack_b[0]= "0", arg_num_stack_b[1]= "1", arg_num_stack_b[2] = "2", arg_num_stack_b[3]= "3" };
-	stack_init(&stack_b, arg_num_stack_b + 1, false);
-
-	/* // ESTADO INICIAL STACKS
-	printf("ESTADO INICIAL STACKS \n");
-	while (stack_a)
-	{
-		printf( "stack A -> numero-> %d, \t ptr previous -> %p \t address node -> %p \t ptr next -> %p \n", stack_a->value, stack_a->prev, stack_a, stack_a->next );
-		stack_a = stack_a->next;
-	}
-	printf("------------ \n");
-	while (stack_b)
-	{
-		printf( "stack B -> numero-> %d, \t ptr previous -> %p \t address node -> %p \t ptr next -> %p \n", stack_b->value, stack_b->prev, stack_b, stack_b->next );
-		stack_b = stack_b->next;
-	}
-	// REINICIALIZACION punteros !!	
-	stack_init(&stack_a, arg_num_stack_a + 1, false);
-	//stack_b = NULL;
-	stack_init(&stack_b, arg_num_stack_b + 1, false); */
+	stack_init(&stack_b, arg_num_stack_b + 1, false);	
 
 	printf("stack_init() -> puntero (*stack_a) a 1º NODO-> %p \n", stack_a);
 	printf("stack_init() -> puntero (*stack_a) a 1º NODO-> %p \n", stack_b);
@@ -125,4 +117,4 @@ int	main(void)
 	printf("\nstack_init() -> return puntero stack a (*stack_a) -> %p \n", stack_a);
 	printf("stack_init() -> return puntero stack b (*stack_b) -> %p \n", stack_b);
 	return (0);
-}
+} */
