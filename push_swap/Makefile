@@ -22,7 +22,8 @@ MAKE_LIBRARY = ar -rcs
 # LISTADO FUNCIONES A INCLUIR EN BIBLIOTECA
 SRC := stack_init.c stack_utils.c \
 error.c \
-command_push.c command_rotate.c command_reverse_rotate.c \
+command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
+sort_min.c \
 
 # libft.a
 
