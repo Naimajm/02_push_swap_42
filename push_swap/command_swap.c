@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:32:35 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 13:15:15 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 23:48:29 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,34 +48,34 @@ static void ft_swap(t_stack **stack)
     // COPIAR 1º NODO A NUEVO 2º NODO y 2º NODO COMO NUEVO 1º NODO
     new_first_node = (*stack)->next;
     new_second_node = *stack;
-    printf("new_first_node -> %p \n", new_first_node);    
-    printf("new_second_node -> %p \n", new_second_node);
+    //printf("new_first_node -> %p \n", new_first_node);    
+    //printf("new_second_node -> %p \n", new_second_node);
 
     // validar -> si hay mas nodo despues del segundo -> enlazar con el nuevo 2ºnodo    
     if (new_first_node->next != NULL)
     {
         new_first_node->next->prev = new_second_node; // CONECTAR RESTO LISTA A NUEVO 2º NODO (si existen mas nodos)
-        printf("new_first_node->next->prev-> %p \n", new_first_node->next->prev);
+        //printf("new_first_node->next->prev-> %p \n", new_first_node->next->prev);
     }
     // CAMBIAR PUNTERO STACK A NUEVO 1º NODO
     *stack = new_first_node;
-    printf("*stack-> %p \n", *stack);
+    //printf("*stack-> %p \n", *stack);
 
     // desconectar 2º nodo->prev y conectar a nulo o  siguiente nodo como nuevo 1º nodo
     new_second_node->next = new_first_node->next;
-    printf("new_second_node->next-> %p \n", new_second_node->next);
+    //printf("new_second_node->next-> %p \n", new_second_node->next);
 
     // desconectar nuevo 1º nodo->prev
     new_first_node->prev = NULL;
-    printf("new_first_node->prev-> %p \n", new_first_node->prev);    
+    //printf("new_first_node->prev-> %p \n", new_first_node->prev);    
 
     // conectar nuevo 1º nodo->next a nuevo 2º nodo
     new_first_node->next = new_second_node;
-    printf("new_first_node->next -> %p \n", new_first_node->next);
+    //printf("new_first_node->next -> %p \n", new_first_node->next);
 
     // conectar nuevo 2º nodo->prev a nuevo 1º nodo
     new_second_node->prev = new_first_node;    
-    printf("new_second_node->prev-> %p \n", new_second_node->prev);
+    //printf("new_second_node->prev-> %p \n", new_second_node->prev);
 }
 
 /* int	main(void)

@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 22:05:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 11:20:50 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 23:41:46 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void ft_reverse_rotate(t_stack **stack)
         return ;
 
     last_node = ft_find_last_node(*stack);
-    printf("last_node -> \t %p \n", last_node);
+    //printf("last_node -> \t %p \n", last_node);
 
     last_node->prev->next = NULL; // desconectar -> conectar nuevo ultimo nodo a '\0'    
     last_node->prev = NULL; // desconectar -> conectar nuevo primer nodo a nulo

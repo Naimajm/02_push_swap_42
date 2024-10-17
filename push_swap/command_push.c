@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 20:43:29 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 11:19:07 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 23:42:00 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,15 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	// va a ser empujado a stack dest
 	node_to_push = *stack_src; 
 	new_first_node = (*stack_src)->next;
-	printf("node_to_push -> \t %p \n", node_to_push);
-	printf("new_first_node -> \t %p \n", new_first_node);
+	//printf("node_to_push -> \t %p \n", node_to_push);
+	//printf("new_first_node -> \t %p \n", new_first_node);
 
 	// stack src -> desconectar nuevo 1º nodo src y conectar a nulo
 	new_first_node->prev = NULL;
 
 	// stack src -> apuntar puntero stack a nuevo 1º nodo
 	*stack_src =  new_first_node;
-	printf("*stack_src -> %p \n", *stack_src);
+	//printf("*stack_src -> %p \n", *stack_src);
 
 	// STACK DESTINO SIN NODOS EXISTENTES o CON NODOS EXISTENTE
 	if ( *stack_dest == NULL )
@@ -69,16 +69,16 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	{
 		// stack dest -> conectar nuevo 1º nodo a antiguo 1º nodo 
 		node_to_push->next = *stack_dest;
-		printf("node_to_push->next-> %p \n", node_to_push->next);
+		//printf("node_to_push->next-> %p \n", node_to_push->next);
 
 		// stack dest -> desconectar antiguo 1º nodo->prev y conectar nuevo
 		// 1º nodo
 		node_to_push->next->prev = node_to_push;
-		printf("node_to_push->next->prev-> %p \n", (*stack_dest)->prev);		
+		//printf("node_to_push->next->prev-> %p \n", (*stack_dest)->prev);		
 	}
 	// stack dest -> apuntar ptr stack dest a nuevo 1º nodo
 	*stack_dest = node_to_push;
-	printf("*stack_dest-> %p \n", *stack_dest);	
+	//printf("*stack_dest-> %p \n", *stack_dest);	
 }
 
 /* int	main(void)
