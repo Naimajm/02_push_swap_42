@@ -1,18 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 13:40:08 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/14 15:48:30 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 23:00:48 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-
-static void	ft_free_stack(t_stack **stack);
 
 void ft_free_all(t_stack **stack, char **argv, bool flag_argc_2)
 {
@@ -29,7 +27,6 @@ void ft_free_all(t_stack **stack, char **argv, bool flag_argc_2)
 	exit(1);
 }
 
-// liberar la matriz 2D creado con la función ft_split() -> ATENCIÓN Tienes que empezar desde -1
 void ft_free_matrix(char **argv)
 {
 	int	index;
@@ -45,8 +42,7 @@ void ft_free_matrix(char **argv)
 	free(argv - 1);	
 }
 
-// LIBERAR MEMORIA STACK
-static void	ft_free_stack(t_stack **stack)
+void	ft_free_stack(t_stack **stack)
 {
 	t_stack *tmp_node; // ptr a nodo temporal
 	t_stack	*current_node;
