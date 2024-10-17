@@ -6,11 +6,48 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 14:11:52 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/14 20:23:08 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/17 00:23:53 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+t_stack	*find_cheapest_node(t_stack *stack)
+{
+	// VALIDACION INICIAL
+	if (stack == NULL)
+		return (NULL);
+	while (stack != NULL)
+	{
+		if (stack->cheapest_cost == true)
+			return (stack);
+		stack = stack->next;
+	}
+	return (NULL);
+}
+
+
+t_stack	*find_smallest_node(t_stack *stack)
+{
+	int	smallest_number;
+	t_stack	*smallest_node;
+
+	// VALIDACION INICIAL 
+	if (stack == NULL)
+		return (NULL);
+	
+	smallest_number = INT_MIN;
+	while (stack != NULL)
+	{
+		if (stack->value < smallest_number)
+		{ 
+			smallest_number = stack->value; // cambio a num temporal + pequeño
+			smallest_node = stack; // capturamos nodo del num temporal + pequeño
+		}
+		stack = stack->next;
+	}
+	return (smallest_node);
+}
 
 void    ft_append_node(t_stack **stack, int number)
 {
@@ -27,8 +64,8 @@ void    ft_append_node(t_stack **stack, int number)
 		return ;
 
 	// INICIALIZAR VALORES NODO	
-	node->value = number;
 	node->next = NULL;
+	node->value = number;	
 
 	// CASO PUNTERO STACK VACIO -> NUEVO 1º NODO
 	if (*stack == NULL)
@@ -44,7 +81,6 @@ void    ft_append_node(t_stack **stack, int number)
 	}    
 }
 
-// ENCONTRAR ULTIMO NODO DE ESTRUCTURA
 t_stack	*ft_find_last_node(t_stack *stack)
 {
 	// VALIDACION INICIAL

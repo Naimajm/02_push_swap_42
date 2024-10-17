@@ -6,19 +6,124 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:06:25 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 14:10:46 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 23:05:46 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
+static void	set_target_node(t_stack *stack_a, t_stack *stack_b);
+
+void	init_nodes(t_stack *stack_a, t_stack *stack_b)
+{
+	set_current_position(stack_a);
+	set_current_position(stack_b);
+	set_target_node(stack_a, stack_b);
+	set_push_price(stack_a, stack_b);
+	set_cheapest_node(stack_b);	
+}
+
+void	set_cheapest_node(t_stack *stack_b)
+{
+	long	best_match_value;
+	t_stack	*best_match_node;
+
+	// VALIDACION INICIAL
+	if (stack_b == NULL)
+		return ;
+	best_match_value = LONG_MAX;
+	while (stack_b != NULL)
+	{
+		if (stack_b->push_price < best_match_value)
+		{
+			best_match_value = stack_b->push_price;
+			best_match_node = stack_b;
+		}
+		stack_b = stack_b->next;
+	}
+	best_match_node->cheapest_cost = true; // asignacion a nodo mas barato segun configuracion
+}
+
+void	set_push_price(t_stack *stack_a, t_stack *stack_b)
+{
+	int	stack_len_a;
+	int	stack_len_b;
+	t_stack	*target_node_a;
+
+	stack_len_a = ft_stack_len(stack_a);
+	stack_len_b = ft_stack_len(stack_b);
+	target_node_a = stack_b->target_node;
+
+	while (stack_b != NULL)
+	{
+		stack_b->push_price = stack_b->current_position;
+		if (stack_b->above_median == false)  // nodo stack b por debajo linea central
+			stack_b->push_price = stack_len_b - (stack_b->current_position);
+		if (target_node_a->above_median == true) // nodo objetivo stack a por encima linea central
+			stack_b->push_price = stack_b->push_price + target_node_a->current_position;
+		
+		else
+			stack_b->push_price = stack_b->push_price - (stack_len_a - target_node_a->current_position);
+		stack_b = stack_b->next;
+	}	
+}
+
+void	set_current_position(t_stack *stack)
+{
+	int	index_position;		// CONTADOR PARA MARCAR POSICION
+	int	central_line;
+
+	index_position = 0;
+	// VALIDACION INICIAL
+	if (stack == NULL)
+		return ;
+	central_line = ft_stack_len(stack) / 2;
+
+	while (stack != NULL)
+	{
+		stack->current_position = index_position;
+		if (index_position <= central_line)
+			stack->above_median = true;
+		else
+			stack->above_median = false;
+		index_position++;
+		stack = stack->next;
+	}
+}
+
 /*
+	ASIGNAR TARGET NODE A NODO STACK B.
 	Encuentra nodo objetivo de 1 nodo. Es el nodo mas pequeño de los mas grandes a su valor.
 	Si no hay (el nodo es el numero mas alto) -> nodo objetivo es el mas pequeño (1º nodo)
+	Ese nodo será el siguiente donde colocar el nodo de stack b.
+	Con esta función cada nodo en b obtiene su nodo objetivo en a.
 */
-static void	ft_set_target_node(t_stack stack_a, t_stack stack_b)
+static void	set_target_node(t_stack *stack_a, t_stack *stack_b)
 {
+	t_stack	*current_node_a;  // nodo actual stack a
+	t_stack	*targe_node;  // puntero al nodo objetivo a del nodo de stack b
+	long	best_match_index;
 
+	while (stack_b)
+	{
+		best_match_index = LONG_MAX;  // flag dinamico
+		current_node_a = stack_a;
 
-	
-}
+		// BUSQUEDA NODO OBJETIVO
+		while (current_node_a)
+		{
+			if (current_node_a->value > stack_b->value && current_node_a->value < best_match_index)
+			{
+				best_match_index = current_node_a->value; 	// cambio a valor actual
+				targe_node = current_node_a;				// capturamos nodo objetivo temporal
+			}
+			current_node_a = current_node_a->next;
+		}
+		// REGISTRO NODO OBJETIVO EN NODOS DE STACK B
+		if (best_match_index == LONG_MAX) // no habia num mayor en stack a del numero de stack b			
+			stack_b->target_node = find_smallest_node(stack_a); // encontrar el numero mas pequeño como target_node
+		else  // nodo objetivo encontrado
+			stack_b->target_node = targe_node;
+		stack_b = stack_b->next;
+	}	
+} 

@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:15:28 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/14 15:50:54 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:00:39 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,40 @@ static int	ft_check_duplicate_numbers(t_stack *stack_a, int number);
 static int	ft_error_syntax(char *str_numbers);
 static long ft_atol(const char *str);
 
-/** 
-* @brief Crea la pila con los valores de la línea de comando.
-Las verificaciones están integrados en la creación misma:
-	-Valores duplicados.
-	-Sobre / Desbordamiento insuficiente.
-	-Errores de sintaxis.
-* @param t_stack **stack: puntero a la lista vinculada creada.
-* @param char **argv: puntero a lista de argumentos strings.
-* @param bool flag_argc_2: si es verdadera, tengo el argv en el HEAP
-para liberar.
-* @returns void
+
+/*
+ *  atol, i need it to check eventual overflows
+ *  converting every string into a long value
 */
+/* static long	ft_atol_oceano(const char *str)
+{
+	long	num;
+	int		isneg;
+	int		i;
+
+	num = 0;
+	isneg = 1;
+	i = 0;
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'
+			|| str[i] == '\n' || str[i] == '\r'
+			|| str[i] == '\v' || str[i] == '\f'))
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
+	{
+		isneg *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		num = (num * 10) + (str[i] - '0');
+		i++;
+	}
+	return (num * isneg);
+} */
+
+
 void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
 {
 	long number;
@@ -58,6 +80,20 @@ void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
 	}
 	if (flag_argc_2)
 		ft_free_matrix(argv);	
+}
+
+bool	stack_is_sorted(t_stack *stack)
+{
+	// VALIDACION INICIAL
+	if (stack == NULL)
+		return (1);
+	while (stack->next)
+	{
+		if (stack->value > stack->next->value)
+			return (false);
+		stack = stack->next;
+	}
+	return (true);
 }
 
 /** 
@@ -96,9 +132,9 @@ static int	ft_error_syntax(char *str_numbers)
 	if(!(str_numbers[index] == '+' || str_numbers[index] == '-' 
 		|| ft_isdigit(str_numbers[index])))
 		return (1);
-	//VALIDACION 1º CHAR COMO SIGNO
-	if (str_numbers[index] == '+' || str_numbers[index] == '-')
-		index++;
+	//VALIDACION 1º CHAR COMO SIGNO y siguiente caracter NO ES NUMERO
+	if ((str_numbers[index] == '+' || str_numbers[index] == '-') && !ft_isdigit(str_numbers[index + 1]))
+		return (1);
 	// validacion valor numerico a partir del 2º character
 	while (str_numbers[index])
 	{

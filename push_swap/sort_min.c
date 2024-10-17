@@ -6,13 +6,29 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 12:28:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 13:37:13 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/16 22:53:41 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 static t_stack	*find_highest_node(t_stack *stack);
+
+void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
+{
+	int	stack_len_a;
+	t_stack	*smallest_node;
+
+	stack_len_a = ft_stack_len(*stack_a);
+	smallest_node = find_smallest_node(*stack_a);
+
+	while (stack_len_a > 3)
+	{
+		init_nodes(*stack_a, *stack_b);
+		finish_rotation(stack_a, smallest_node, 'a');
+		pb(stack_b, stack_a, false);	// push to stack b	
+	}
+}
 
 /*
  * Cuando tengo 3 nodos, es fácil de ordenar
@@ -21,7 +37,7 @@ static t_stack	*find_highest_node(t_stack *stack);
  * ~ Ahora tengo con fuerza el más grande en la parte inferior.
  * entonces solo reviso 1° y 2°
 */
-void tiny_sort(t_stack **stack)
+void	tiny_sort_three(t_stack **stack)
 {
 	t_stack	*first_node;
     t_stack *highest_node; // nodo con numero mas alto
@@ -59,7 +75,7 @@ static t_stack	*find_highest_node(t_stack *stack)
 	return (highest_node);
 } 
 
-int	main(void)
+/* int	main(void)
 {
 	t_stack	*stack;
 
@@ -70,7 +86,7 @@ int	main(void)
 
 	// PROCESO TRANSFORMACION
 	printf("\nPROCESO TRANSFORMACION --------\n");
-	tiny_sort(&stack);
+	tiny_sort_three(&stack);
 	printf("------------ \n");
 
 	// ESTADO FINAL STACKS
@@ -82,4 +98,4 @@ int	main(void)
 	}
 	printf("stack_init() -> puntero (*stack_a) a 1º NODO-> %p \n", stack);
 	return (0);
-}
+} */
