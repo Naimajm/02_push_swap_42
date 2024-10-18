@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 20:43:29 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 23:42:00 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/18 11:17:01 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	t_stack *node_to_push;
 	t_stack	*new_first_node;
 
-	// VALIDACION INICIAL (stack b  podria ser nulo)
+	// VALIDACION INICIAL (stack src podria ser nulo)
 	if ( *stack_src == NULL )
 		return ;
 
@@ -52,19 +52,19 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	//printf("node_to_push -> \t %p \n", node_to_push);
 	//printf("new_first_node -> \t %p \n", new_first_node);
 
-	// stack src -> desconectar nuevo 1º nodo src y conectar a nulo
-	new_first_node->prev = NULL;
-
 	// stack src -> apuntar puntero stack a nuevo 1º nodo
 	*stack_src =  new_first_node;
 	//printf("*stack_src -> %p \n", *stack_src);
 
+	// SI YA NO HAY MAS NODOS¡¡ -> STACK VACIO  ¡¡¡
+	if (*stack_src != NULL)
+		new_first_node->prev = NULL; // stack src -> desconectar nuevo 1º nodo src y conectar a nulo
+	
+	node_to_push->prev = NULL;	
+
 	// STACK DESTINO SIN NODOS EXISTENTES o CON NODOS EXISTENTE
-	if ( *stack_dest == NULL )
-	{
-		// stack dest -> conectar nuevo 1º nodo a nulo
-		node_to_push->next = NULL;		
-	}
+	if ( *stack_dest == NULL )		
+		node_to_push->next = NULL;	// stack dest -> conectar nuevo 1º nodo a nulo	
 	else
 	{
 		// stack dest -> conectar nuevo 1º nodo a antiguo 1º nodo 
@@ -80,6 +80,30 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	*stack_dest = node_to_push;
 	//printf("*stack_dest-> %p \n", *stack_dest);	
 }
+
+/* static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
+{
+	t_stack	*node_to_push;
+
+	if (NULL == *stack_src)
+		return ;
+	node_to_push = *stack_src;
+	*stack_src = (*stack_src)->next;
+	if (*stack_src)
+		(*stack_src)->prev = NULL;
+	node_to_push->prev = NULL;
+	if (NULL == *stack_dest)
+	{
+		*stack_dest = node_to_push;
+		node_to_push->next = NULL;
+	}
+	else
+	{
+		node_to_push->next = *stack_dest;
+		node_to_push->next->prev = node_to_push;
+		*stack_dest = node_to_push;
+	}
+} */
 
 /* int	main(void)
 {

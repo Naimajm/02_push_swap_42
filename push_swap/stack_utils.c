@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 14:11:52 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/17 13:30:43 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:12:32 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ void    ft_append_node(t_stack **stack, int number)
 	node = malloc(sizeof(t_stack));
 	//node = ft_calloc(1, sizeof(t_stack));
 	if (node == NULL)
+	{	
+		//ft_print_error();
 		return ;
+	}
 
 	// INICIALIZAR VALORES NUEVO NODO	
 	node->next = NULL;

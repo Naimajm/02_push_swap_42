@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 13:40:08 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 23:00:48 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/17 16:35:53 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ void ft_free_all(t_stack **stack, char **argv, bool flag_argc_2)
 		ft_free_matrix(argv);
 
 	// impresion error en fd = 2 -> gestion errores
-	ft_putstr_fd("Error\n", 2);
-	
+	//ft_print_error();
+	//ft_putstr_fd("Error\n", 2);	
+	//write(2, "Error\n", 6);
 	exit(1);
 }
 
@@ -40,6 +41,7 @@ void ft_free_matrix(char **argv)
 		index++;
 	}
 	free(argv - 1);	
+	//ft_putstr_fd("Liberada reserva matriz\n", 1);
 }
 
 void	ft_free_stack(t_stack **stack)
@@ -58,6 +60,13 @@ void	ft_free_stack(t_stack **stack)
 		current_node = tmp_node;
 	}
 	*stack= NULL; // redireccionar ptr stack a nulo
+	//ft_putstr_fd("Liberada reserva stack\n", 1);
+}
+
+void ft_print_error(void)
+{
+	ft_putstr_fd("Error\n", 2);
+	//exit(1);	
 }
 
 

@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:48 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/17 00:28:57 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:37:04 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,9 @@ void ft_free_matrix(char **argv);
 
 // LIBERAR MEMORIA STACK
 void	ft_free_stack(t_stack **stack);
+
+// IMPRESION MENSAJE 'Error' en fd = 2
+void ft_print_error(void);
 
 // ARCHIVO 'stack_utils.c' -----------------------------
 

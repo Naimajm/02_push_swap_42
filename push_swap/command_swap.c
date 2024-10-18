@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:32:35 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 23:48:29 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:13:40 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,12 @@ void    ss(t_stack **stack_a, t_stack **stack_b, bool checker)
 static void ft_swap(t_stack **stack)
 {
     t_stack *new_first_node;
-    t_stack *new_second_node;    
+    t_stack *new_second_node;   
+    int stack_len; 
     
+    stack_len = ft_stack_len(*stack);
     // VALIDACION INICIAL (stack no inicializado o ptr sin direccion)
-    if (*stack == NULL || stack == NULL)
+    if (*stack == NULL || stack == NULL || stack_len < 2)
         return ;
     
     // COPIAR 1º NODO A NUEVO 2º NODO y 2º NODO COMO NUEVO 1º NODO
@@ -81,31 +83,54 @@ static void ft_swap(t_stack **stack)
 /* int	main(void)
 {
 	t_stack *stack_a;
-	t_stack *stack_b;
+	//t_stack *stack_b;
+    t_stack *stack_a_copy;
 
 	// INICIALIZACION STACK_A -> OPCION MAS DE 2 NODOS
-	char	*arg_num_stack_a[4] = { arg_num_stack_a[0]= "0", arg_num_stack_a[1]= "4", arg_num_stack_a[2] = "5", arg_num_stack_a[3]= "6" };
+	//char	*arg_num_stack_a[4] = { arg_num_stack_a[0]= "3", arg_num_stack_a[1]= "4", arg_num_stack_a[2] = "5", arg_num_stack_a[3]= "6"};
 
     // INICIALIZACION STACK_A -> 2 NODOS
-	// char	*arg_num_stack_a[4] = { arg_num_stack_a[0]= "0", arg_num_stack_a[1]= "4", arg_num_stack_a[2] = "5" };    
+    char	*arg_num_stack_a[2] = { arg_num_stack_a[0]= "4", arg_num_stack_a[1]= "5" };
 
-	stack_init(&stack_a, arg_num_stack_a + 1, false);
-
+	stack_init(&stack_a, arg_num_stack_a, false);
 	printf("stack_init() -> puntero (*stack_a) a 1º NODO-> %p \n", stack_a);
+
+    // INICIALIZACION STACK_A -> 2 NODOS
+	//char	*arg_num_stack_b[4] = { arg_num_stack_b[0]= "0", arg_num_stack_b[1]= "4", arg_num_stack_b[2] = "5" };    
+
+    //stack_init(&stack_b, arg_num_stack_b + 1, false);
+	//printf("stack_init() -> puntero (*stack_b) a 1º NODO-> %p \n", stack_b);
 
 	// PROCESO TRANSFORMACION
 	printf("\nPROCESO TRANSFORMACION --------\n");
-	ft_swap(&stack_a);
-	printf("------------ \n");
+    ft_swap(&stack_a);
+    stack_a_copy = stack_a;
+    while (stack_a_copy)
+	{
+		printf( "stack-> num-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_a_copy->value, stack_a_copy->prev, stack_a_copy, stack_a_copy->next );
+		stack_a_copy = stack_a_copy->next;
+	}	
 
+    sa(&stack_a, false);
+    stack_a_copy = stack_a;
+    while (stack_a_copy)
+	{
+		printf( "stack-> num-> %d, \t prev-> %p \t address-> %p \t next-> %p \n",  stack_a_copy->value, stack_a_copy->prev, stack_a_copy, stack_a_copy->next );
+		stack_a_copy = stack_a_copy->next;
+	}
+    //sb(&stack_b, false);    
+	printf("------------ \n");
+    
 	// ESTADO FINAL STACKS
 	printf("ESTADO FINAL STACKS \n");
+    printf("\nstack_init() -> return puntero stack a (*stack_a) -> %p \n", stack_a);
 	while (stack_a)
 	{
-		printf( "stack -> numero-> %d, \t ptr previous-> %p \t address-> %p \t ptr next-> %p \n", stack_a->value, stack_a->prev, stack_a, stack_a->next );
+		printf( "stack-> num-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_a->value, stack_a->prev, stack_a, stack_a->next );
 		stack_a = stack_a->next;
 	}	
-    
-	printf("\nstack_init() -> return puntero stack a (*stack_a) -> %p \n", stack_a);
+
+    ft_free_stack(&stack_a);
+	//ft_free_stack(&stack_b);
 	return (0);
 } */
