@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 14:11:52 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/17 16:12:32 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:56:47 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ t_stack	*find_smallest_node(t_stack *stack)
 	return (smallest_node);
 }
 
-void    ft_append_node(t_stack **stack, int number)
+/* void    ft_append_node(t_stack **stack, int number)
 {
     t_stack *node;
 	t_stack	*last_node;
@@ -81,6 +81,31 @@ void    ft_append_node(t_stack **stack, int number)
 		last_node->next = node;
 		node->prev = last_node;
 	}    
+} */
+
+void	ft_append_node(t_stack **stack, int nbr)
+{
+	t_stack	*node;
+	t_stack	*last_node;
+
+	if (NULL == stack)
+		return ;
+	node = malloc(sizeof(t_stack));
+	if (NULL == node)
+		return ;
+	node->next = NULL;
+	node->value = nbr;
+	if (NULL == *stack)
+	{
+		*stack = node;
+		node->prev = NULL;
+	}
+	else
+	{
+		last_node = ft_find_last_node(*stack);
+		last_node->next = node;
+		node->prev = last_node;
+	}
 }
 
 t_stack	*ft_find_last_node(t_stack *node)

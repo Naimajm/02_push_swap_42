@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:15:28 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/18 09:39:20 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/23 11:43:16 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,15 @@
 
 static int	ft_check_duplicate_numbers(t_stack *stack_a, int number);
 static int	ft_error_syntax(char *str_numbers);
-static long ft_atol(const char *str);
+static long int	ft_atol(const char *str);
+//static long long	ft_atol(const char *str);
 
-void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
+/* void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
 {
 	long number;
 	int	index;
 
 	index = 0;
-	/* if (argv == NULL)
-	{
-		ft_print_error();
-		return ;
-	} */
 
 	// para cada argumento string -> validar, convertir a numero y añadir a nodo
 	while (argv[index])
@@ -41,13 +37,20 @@ void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
 		// CONVERSION ARGUMENTO STR A NUMERO
 		number = ft_atol(argv[index]);
 
+		//printf("stack_init() -> number atol()-> %li \n", number);
+
+		if ( number < LONG_MIN || number > LONG_MAX )
+		{
+			ft_print_error();
+			ft_free_all(stack, argv, flag_argc_2);
+		}
+
 		// VALIDACION NUMEROS ENTEROS MAXIMOS Y MINIMOS -> NUMEROS NO VALIDOS
 		if ( number < INT_MIN || number > INT_MAX )
 		{
 			ft_print_error();
 			ft_free_all(stack, argv, flag_argc_2);
 		}
-
 		// VALIDACION NUMBER CON NUMEROS EN LOS NODOS YA CREADOS
 		if (ft_check_duplicate_numbers(*stack, (int)number))
 		{
@@ -58,10 +61,48 @@ void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
 		// AÑADIR VALOR EN NUEVO NODO
 		ft_append_node(stack, (int)number);		
 		index++;
-		//++index;
 	}
 	if (flag_argc_2)
 		ft_free_matrix(argv);	
+} */
+
+void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
+{
+	long	nbr;
+	int		i;
+
+	i = 0;
+	// ?????
+	/* if (argv[i] == 0)
+	{
+		ft_print_error();
+		return ;
+
+	} */
+
+	while (argv[i])
+	{
+		if (ft_error_syntax(argv[i]))
+		{
+			ft_print_error();
+			ft_free_all(stack, argv, flag_argc_2);
+		}
+		nbr = ft_atol(argv[i]);
+		if (nbr < INT_MIN || nbr > INT_MAX)
+		{
+			ft_print_error();
+			ft_free_all(stack, argv, flag_argc_2);
+		}
+		if (ft_check_duplicate_numbers(*stack, (int)nbr))
+		{
+			ft_print_error();
+			ft_free_all(stack, argv, flag_argc_2);
+		}
+		ft_append_node(stack, (int)nbr);
+		++i;
+	}
+	if (flag_argc_2)
+		ft_free_matrix(argv);
 }
 
 bool	stack_is_sorted(t_stack *stack)
@@ -137,7 +178,8 @@ en su valor entero correspondiente.
 * @returns long -> valor long obtenido de la cadena de entrada
 o valor 0 como error.
 */
-static long	ft_atol(const char *str)
+static long int	ft_atol(const char *str)
+//static long long	ft_atol(const char *str)
 {
 	int		index;
 	long	result;
@@ -162,8 +204,61 @@ static long	ft_atol(const char *str)
 		result = (result * 10) + (str[index] - '0');
 		index++;
 	}
-	return ((long) sign * result);
+	return (sign * result);
 }
+
+/* static long	ft_atol(const char *str)
+{
+	long	num;
+	int		isneg;
+	int		i;
+
+	num = 0;
+	isneg = 1;
+	i = 0;
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'
+			|| str[i] == '\n' || str[i] == '\r'
+			|| str[i] == '\v' || str[i] == '\f'))
+		i++;
+	if (str[i] == '+')
+		i++;
+	else if (str[i] == '-')
+	{
+		isneg *= -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		num = (num * 10) + (str[i] - '0');
+		i++;
+	}
+	return (num * isneg);
+} */
+
+/* static long int	ft_atol(const char *str)
+{
+	int			i;
+	long int	res;
+	int			sign;
+
+	i = 0;
+	res = 0;
+	sign = 1;
+	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
+		i++;
+	if (str[i] == '-' || str[i] == '+')
+	{
+		if (str[i] == '-')
+			sign *= -1;
+		i++;
+	}
+	while (str[i] && ft_isdigit(str[i]))
+	{
+		res = (res * 10) + str[i] - 48;
+		i++;
+	}
+	return (res * sign);
+} */
 
 /* int main(void)
 {

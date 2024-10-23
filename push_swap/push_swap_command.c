@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:26:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 23:07:22 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:50:10 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,14 @@ static	void	move_nodes(t_stack **stack_a, t_stack **stack_b);
 static	void	rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest_node);
 static	void	reverse_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest_node);
 
-void	push_swap(t_stack **stack_a, t_stack **stack_b)
+/* void	push_swap(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack	*smallest_node;
 	int	stack_len_a;
 
 	stack_len_a = ft_stack_len(*stack_a);
+	
+	//printf("stack_len_a -> %i \n", stack_len_a);
 
 	// INICIO CONFIGURACION STACK A Y B -----------------
 
@@ -58,6 +60,70 @@ void	push_swap(t_stack **stack_a, t_stack **stack_b)
 	else
 		while (*stack_a != smallest_node)
 			rra(stack_a, false);
+} */
+
+void	push_swap(t_stack **a, t_stack **b)
+{
+	t_stack	*smallest;
+	int				len_a;
+
+	//printf("push_swap() \n");
+	
+	len_a = ft_stack_len(*a);
+	//printf("ft_stack_len() -> %i \n", len_a);
+
+	if (len_a == 5)
+	{
+		//printf("push_swap() tiny_sort_five() \n");
+		//while (len_a-- > 3)
+			//pb(b, a, false);
+		tiny_sort_five(a, b);
+	}
+	else
+	{
+		//printf("push_swap() pb() \n");
+		while (len_a-- > 3)
+			pb(b, a, false);
+	}
+	//printf("push_swap() tiny_sort_three() \n");
+	// IMPRESION STACK A	
+	t_stack *stack_copy_a;
+	stack_copy_a = *a;
+	while (stack_copy_a)  
+	{
+		//printf( "push_swap() stack -> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_a->value, stack_copy_a->prev, stack_copy_a, stack_copy_a->next );
+		stack_copy_a = stack_copy_a->next;
+	}
+
+	tiny_sort_three(a);
+
+	//printf("push_swap() inicio ciclo init node() \n");
+
+	// IMPRESION STACK B	
+	/* t_stack *stack_copy_b;
+	stack_copy_b = *b;
+	while (stack_copy_b)  
+	{
+		printf( "main() stack -> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_b->value, stack_copy_b->prev, stack_copy_b, stack_copy_b->next );
+		stack_copy_b = stack_copy_b->next;
+	} */
+
+	while (*b)
+	{
+		init_nodes(*a, *b);
+
+		//printf("push_swap() init_nodes() -> %p a, %p b \n", *a, *b);
+
+		move_nodes(a, b);
+	}
+	set_current_position(*a);
+	smallest = find_smallest_node(*a);
+	if (smallest->above_median)
+		while (*a != smallest)
+			ra(a, false);
+	else
+		while (*a != smallest)
+			rra(a, false);
 }
 
 /*
@@ -65,7 +131,7 @@ void	push_swap(t_stack **stack_a, t_stack **stack_b)
  * 1) Hacer que emerjan los nodos objetivo
  * 2) push en A
 */
-static void	move_nodes(t_stack **stack_a, t_stack **stack_b)
+/* static void	move_nodes(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack	*cheapest_node;
 	t_stack	*target_node;
@@ -86,6 +152,24 @@ static void	move_nodes(t_stack **stack_a, t_stack **stack_b)
 	finish_rotation(stack_a, target_node, 'a');
 	// PUSH DEL cheapest_node DEL STACK B AL STACK A
 	pa(stack_a, stack_b, false);	
+} */
+
+static void	move_nodes(t_stack **a, t_stack **b)
+{
+	t_stack	*cheapest_node;
+
+	cheapest_node = find_cheapest_node(*b);
+	//printf("move_nodes() -> cheapest_node, %p \n", cheapest_node);
+	
+	if (cheapest_node->above_median
+		&& cheapest_node->target_node->above_median)
+		rotate_both(a, b, cheapest_node);
+	else if (!(cheapest_node->above_median)
+		&& !(cheapest_node->target_node->above_median))
+		reverse_rotate_both(a, b, cheapest_node);
+	finish_rotation(b, cheapest_node, 'b');
+	finish_rotation(a, cheapest_node->target_node, 'a');
+	pa(a, b, false);
 }
 
 void	finish_rotation(t_stack **stack, t_stack *top_node, char stack_name)

@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 13:40:08 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/17 16:35:53 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:36:47 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	ft_free_stack(t_stack **stack)
 
 void ft_print_error(void)
 {
-	ft_putstr_fd("Error\n", 2);
+	//ft_putstr_fd("Error\n", 2);
+	write(2, "Error\n", 6);
 	//exit(1);	
 }
 

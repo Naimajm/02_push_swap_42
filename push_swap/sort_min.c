@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 12:28:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 22:53:41 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/21 12:43:15 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static t_stack	*find_highest_node(t_stack *stack);
 
-void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
+/* void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
 {
 	int	stack_len_a;
 	t_stack	*smallest_node;
@@ -22,11 +22,31 @@ void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
 	stack_len_a = ft_stack_len(*stack_a);
 	smallest_node = find_smallest_node(*stack_a);
 
+	printf("tiny_sort_five()-> smallest_node -> %p", smallest_node);
+
 	while (stack_len_a > 3)
 	{
 		init_nodes(*stack_a, *stack_b);
+
+		// IMPRESION STACK
+		t_stack *stack_copy_a = *stack_a;
+		while (stack_copy_a)  
+		{
+			printf( "tiny_sort_five() -> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_a->value, stack_copy_a->prev, stack_copy_a, stack_copy_a->next );
+			stack_copy_a = stack_copy_a->next;
+		}
+		
 		finish_rotation(stack_a, smallest_node, 'a');
 		pb(stack_b, stack_a, false);	// push to stack b	
+	}
+} */
+void	tiny_sort_five(t_stack **a, t_stack **b)
+{
+	while (ft_stack_len(*a) > 3)
+	{
+		init_nodes(*a, *b);
+		finish_rotation(a, find_smallest_node(*a), 'a');
+		pb(b, a, false);
 	}
 }
 
@@ -37,7 +57,7 @@ void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
  * ~ Ahora tengo con fuerza el más grande en la parte inferior.
  * entonces solo reviso 1° y 2°
 */
-void	tiny_sort_three(t_stack **stack)
+/* void	tiny_sort_three(t_stack **stack)
 {
 	t_stack	*first_node;
     t_stack *highest_node; // nodo con numero mas alto
@@ -51,6 +71,19 @@ void	tiny_sort_three(t_stack **stack)
 	// ordenar 2 elementos (una vez el valor mayor se coloca abajo)
 	if (first_node->value > first_node->next->value)
 		sa(stack, false);    
+} */
+
+void	tiny_sort_three(t_stack **a)
+{
+	t_stack	*highest_node;
+
+	highest_node = find_highest_node(*a);
+	if (*a == highest_node)
+		ra(a, false);
+	else if ((*a)->next == highest_node)
+		rra(a, false);
+	if ((*a)->value > (*a)->next->value)
+		sa(a, false);
 }
 
 static t_stack	*find_highest_node(t_stack *stack)

@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:06:25 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 23:05:46 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/23 13:42:55 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,22 @@ static void	set_target_node(t_stack *stack_a, t_stack *stack_b);
 
 void	init_nodes(t_stack *stack_a, t_stack *stack_b)
 {
+	//printf("init_nodes() \n");
+
+	//printf("set_current_position() \n");
 	set_current_position(stack_a);
 	set_current_position(stack_b);
+	
+	//printf("set_target_node() \n");
 	set_target_node(stack_a, stack_b);
+
+	//printf("set_push_price() \n");
 	set_push_price(stack_a, stack_b);
+
+	//printf("set_cheapest_node() \n");
 	set_cheapest_node(stack_b);	
+
+	//printf("fin  init_nodes() \n");
 }
 
 void	set_cheapest_node(t_stack *stack_b)
@@ -52,10 +63,12 @@ void	set_push_price(t_stack *stack_a, t_stack *stack_b)
 
 	stack_len_a = ft_stack_len(stack_a);
 	stack_len_b = ft_stack_len(stack_b);
-	target_node_a = stack_b->target_node;
+	
 
 	while (stack_b != NULL)
 	{
+		target_node_a = stack_b->target_node;
+		
 		stack_b->push_price = stack_b->current_position;
 		if (stack_b->above_median == false)  // nodo stack b por debajo linea central
 			stack_b->push_price = stack_len_b - (stack_b->current_position);
@@ -67,6 +80,26 @@ void	set_push_price(t_stack *stack_a, t_stack *stack_b)
 		stack_b = stack_b->next;
 	}	
 }
+
+/* void	set_push_price(t_stack *stack_a, t_stack *stack_b)
+{
+	int	stack_len_a;
+	int	stack_len_b;
+
+	stack_len_a = ft_stack_len(stack_a);
+	stack_len_b = ft_stack_len(stack_b);
+	while (stack_b)
+	{
+		stack_b->push_price = stack_b->current_position;
+		if (!(stack_b->above_median))
+			stack_b->push_price = stack_len_b - (stack_b->current_position);
+		if (stack_b->target_node->above_median)
+			stack_b->push_price += stack_b->target_node->current_position;
+		else
+			stack_b->push_price += stack_len_a - (stack_b->target_node->current_position);
+		stack_b = stack_b->next;
+	}
+} */
 
 void	set_current_position(t_stack *stack)
 {
