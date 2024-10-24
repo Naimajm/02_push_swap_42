@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:15:28 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/23 11:43:16 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:54:40 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static int	ft_check_duplicate_numbers(t_stack *stack_a, int number);
 static int	ft_error_syntax(char *str_numbers);
-static long int	ft_atol(const char *str);
-//static long long	ft_atol(const char *str);
+static long	ft_atol(const char *str);
 
 /* void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
 {
@@ -32,18 +31,10 @@ static long int	ft_atol(const char *str);
 		{
 			ft_print_error();
 			ft_free_all(stack, argv, flag_argc_2);
-		}		
-
+		}
 		// CONVERSION ARGUMENTO STR A NUMERO
 		number = ft_atol(argv[index]);
-
 		//printf("stack_init() -> number atol()-> %li \n", number);
-
-		if ( number < LONG_MIN || number > LONG_MAX )
-		{
-			ft_print_error();
-			ft_free_all(stack, argv, flag_argc_2);
-		}
 
 		// VALIDACION NUMEROS ENTEROS MAXIMOS Y MINIMOS -> NUMEROS NO VALIDOS
 		if ( number < INT_MIN || number > INT_MAX )
@@ -57,7 +48,6 @@ static long int	ft_atol(const char *str);
 			ft_print_error();
 			ft_free_all(stack, argv, flag_argc_2);
 		}
-
 		// AÑADIR VALOR EN NUEVO NODO
 		ft_append_node(stack, (int)number);		
 		index++;
@@ -66,49 +56,47 @@ static long int	ft_atol(const char *str);
 		ft_free_matrix(argv);	
 } */
 
-void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
+void	stack_init(t_stack **stack, char **argv)
 {
-	long	nbr;
-	int		i;
+	long number;
+	int	index;
 
-	i = 0;
-	// ?????
-	/* if (argv[i] == 0)
-	{
-		ft_print_error();
-		return ;
+	index = 0;
 
-	} */
+	// para cada argumento string -> validar, convertir a numero y añadir a nodo
+	while (argv[index])
+	{	
+		// VALIDACION ERRORES SINTACTICOS -> ARG STRING VALIDOS
+		if (ft_error_syntax(argv[index]))
+		{
+			ft_print_error(2);
+			ft_free_stack(stack);
+		}
+		// CONVERSION ARGUMENTO STR A NUMERO
+		number = ft_atol(argv[index]);
+		//printf("stack_init() -> number atol()-> %li \n", number);
 
-	while (argv[i])
-	{
-		if (ft_error_syntax(argv[i]))
+		// VALIDACION NUMEROS ENTEROS MAXIMOS Y MINIMOS -> NUMEROS NO VALIDOS
+		if ( number < INT_MIN || number > INT_MAX )
 		{
-			ft_print_error();
-			ft_free_all(stack, argv, flag_argc_2);
+			ft_print_error(2);
+			ft_free_stack(stack);
 		}
-		nbr = ft_atol(argv[i]);
-		if (nbr < INT_MIN || nbr > INT_MAX)
+		// VALIDACION NUMBER CON NUMEROS EN LOS NODOS YA CREADOS
+		if (ft_check_duplicate_numbers(*stack, (int)number))
 		{
-			ft_print_error();
-			ft_free_all(stack, argv, flag_argc_2);
+			ft_print_error(2);
+			ft_free_stack(stack);
 		}
-		if (ft_check_duplicate_numbers(*stack, (int)nbr))
-		{
-			ft_print_error();
-			ft_free_all(stack, argv, flag_argc_2);
-		}
-		ft_append_node(stack, (int)nbr);
-		++i;
+		// AÑADIR VALOR EN NUEVO NODO
+		ft_append_node(stack, (int)number);		
+		index++;
 	}
-	if (flag_argc_2)
-		ft_free_matrix(argv);
 }
 
 bool	stack_is_sorted(t_stack *stack)
-{
-	// VALIDACION INICIAL
-	if (stack == NULL)
+{	
+	if (stack == NULL) // VALIDACION INICIAL
 		return (1);
 	while (stack->next)
 	{
@@ -121,14 +109,13 @@ bool	stack_is_sorted(t_stack *stack)
 
 /** 
 * @brief Checkea string por error de repeticion de numeros en el stack.
-* @param str: puntero a estructura lista vinculada.
-* @param int: numero entero a comparar con valores de los nodos.
-* @returns 0 -> no duplicidad numero ; valor 1 -> duplicidad numero.
+* @param stack t_stack *: puntero a estructura lista vinculada.
+* @param number int: numero entero a comparar con valores de los nodos.
+* @returns int -> 0 -> no duplicidad numero ; valor 1 -> duplicidad numero.
 */
 static int	ft_check_duplicate_numbers(t_stack *stack, int number)
-{
-	// VALIDACION INICIAL ARGUMENTOS
-	if (stack == NULL)
+{	
+	if (stack == NULL) // VALIDACION INICIAL ARGUMENTOS
 		return (0);
 	// CICLO VALORES EN NODOS Y COMPARACION CON NUMBER
 	while (stack)
@@ -143,8 +130,8 @@ static int	ft_check_duplicate_numbers(t_stack *stack, int number)
 /** 
 * @brief Checkea string por error sintaticos para la conversion de 
 numeros validos.
-* @param str: puntero al string con valores numericos o de signo -,+.
-* @returns 0 -> no errores sintacticos ; valor 1 -> error.
+* @param str_numbers char *: puntero al string con valores numericos o de signo -,+.
+* @returns int -> 0 -> no errores sintacticos ; valor 1 -> error.
 */
 static int	ft_error_syntax(char *str_numbers)
 {
@@ -153,13 +140,15 @@ static int	ft_error_syntax(char *str_numbers)
 	index = 0;
 	if (str_numbers == NULL)
 		return (1);
-	// VALIDACION 1º CHAR-> char fuera de signo (+ -) y serie numerica (0-9) 
+	// VALIDACION 1º CHAR-> char fuera de signo (+ -) o serie numerica (0-9) 
 	if(!(str_numbers[index] == '+' || str_numbers[index] == '-' 
 		|| ft_isdigit(str_numbers[index])))
 		return (1);
+
 	//VALIDACION 1º CHAR COMO SIGNO y siguiente caracter NO ES NUMERO
 	if ((str_numbers[index] == '+' || str_numbers[index] == '-') && !(ft_isdigit(str_numbers[index + 1])))
 		return (1);
+		
 	// validacion valor numerico a partir del 2º character
 	index++;
 	while (str_numbers[index])
@@ -172,19 +161,18 @@ static int	ft_error_syntax(char *str_numbers)
 }
 
 /** 
-* @brief Convierte una representación de cadena de un número 'LONG'
+* @brief Convierte una representación de cadena 'str' de un número 'LONG'
 en su valor entero correspondiente.
-* @param str: puntero a la cadena que se va a converti.
+* @param str const char *: puntero a la cadena que se va a converti.
 * @returns long -> valor long obtenido de la cadena de entrada
 o valor 0 como error.
 */
-static long int	ft_atol(const char *str)
-//static long long	ft_atol(const char *str)
+static long ft_atol(const char *str)
 {
 	int		index;
 	long	result;
-	int	sign_count;
-	int	sign;
+	int		sign_count;
+	int		sign;
 	
 	index = 0;
 	result = 0;
@@ -199,66 +187,13 @@ static long int	ft_atol(const char *str)
 			sign = -1;
 		index++;
 	}
-	while (str[index] >= '0' && str[index] <= '9' && sign_count <= 1)
+	while ( ft_isdigit(str[index]) && sign_count <= 1 )
 	{
 		result = (result * 10) + (str[index] - '0');
 		index++;
 	}
-	return (sign * result);
+	return ((long) sign * result);
 }
-
-/* static long	ft_atol(const char *str)
-{
-	long	num;
-	int		isneg;
-	int		i;
-
-	num = 0;
-	isneg = 1;
-	i = 0;
-	while (str[i] && (str[i] == ' ' || str[i] == '\t'
-			|| str[i] == '\n' || str[i] == '\r'
-			|| str[i] == '\v' || str[i] == '\f'))
-		i++;
-	if (str[i] == '+')
-		i++;
-	else if (str[i] == '-')
-	{
-		isneg *= -1;
-		i++;
-	}
-	while (str[i] >= '0' && str[i] <= '9')
-	{
-		num = (num * 10) + (str[i] - '0');
-		i++;
-	}
-	return (num * isneg);
-} */
-
-/* static long int	ft_atol(const char *str)
-{
-	int			i;
-	long int	res;
-	int			sign;
-
-	i = 0;
-	res = 0;
-	sign = 1;
-	while (str[i] == 32 || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-	{
-		if (str[i] == '-')
-			sign *= -1;
-		i++;
-	}
-	while (str[i] && ft_isdigit(str[i]))
-	{
-		res = (res * 10) + str[i] - 48;
-		i++;
-	}
-	return (res * sign);
-} */
 
 /* int main(void)
 {
