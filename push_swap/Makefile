@@ -27,7 +27,7 @@ DARK_YELLOW         = \033[38;5;143m
 # ---------------------------------------------------
 
 # NOMBRE SALIDA ARCHIVO COMPILADO
-NAME = push_swap
+NAME = push_swap.a
 
 # nombre compilador
 CC := cc
