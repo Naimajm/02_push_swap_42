@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:53 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 11:57:16 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:06:22 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,6 @@ int	main(int argc, char **argv)
 	} */
 
 	// LIBERAR MEMORIA STACK
-	free(stack_a);
+	ft_free_stack(&stack_a);
 	return (0);
 }

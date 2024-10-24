@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:32:35 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/17 14:13:40 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:49:14 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void    ss(t_stack **stack_a, t_stack **stack_b, bool checker)
         ft_putstr_fd("ss\n", 1);
 }
 
-static void ft_swap(t_stack **stack)
+/* static void ft_swap(t_stack **stack)
 {
     t_stack *new_first_node;
     t_stack *new_second_node;   
@@ -78,6 +78,22 @@ static void ft_swap(t_stack **stack)
     // conectar nuevo 2º nodo->prev a nuevo 1º nodo
     new_second_node->prev = new_first_node;    
     //printf("new_second_node->prev-> %p \n", new_second_node->prev);
+} */
+
+static void	ft_swap(t_stack **head)
+{
+	int	len;
+
+	len = ft_stack_len(*head);
+	if (NULL == *head || NULL == head || 1 == len)
+		return ;
+	*head = (*head)->next;
+	(*head)->prev->prev = *head;
+	(*head)->prev->next = (*head)->next;
+	if ((*head)->next)
+		(*head)->next->prev = (*head)->prev;
+	(*head)->next = (*head)->prev;
+	(*head)->prev = NULL;
 }
 
 /* int	main(void)

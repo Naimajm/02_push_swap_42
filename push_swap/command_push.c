@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 20:43:29 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/18 11:17:01 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:46:09 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ vacio o con algun nodo existente.
 * @param stack_src: puntero a stack origen.
 * @returns void.
 */
-static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
+/* static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 {
 	t_stack *node_to_push;
 	t_stack	*new_first_node;
@@ -79,6 +79,30 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	// stack dest -> apuntar ptr stack dest a nuevo 1º nodo
 	*stack_dest = node_to_push;
 	//printf("*stack_dest-> %p \n", *stack_dest);	
+} */
+
+static void	ft_push(t_stack **dest, t_stack **src)
+{
+	t_stack	*node_to_push;
+
+	if (NULL == *src)
+		return ;
+	node_to_push = *src;
+	*src = (*src)->next;
+	if (*src)
+		(*src)->prev = NULL;
+	node_to_push->prev = NULL;
+	if (NULL == *dest)
+	{
+		*dest = node_to_push;
+		node_to_push->next = NULL;
+	}
+	else
+	{
+		node_to_push->next = *dest;
+		node_to_push->next->prev = node_to_push;
+		*dest = node_to_push;
+	}
 }
 
 /* static  void ft_push(t_stack **stack_dest, t_stack **stack_src)

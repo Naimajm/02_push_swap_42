@@ -6,21 +6,26 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:48 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/23 11:29:13 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 19:02:49 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-#include "../libft/libft.h"
+/* C LIBRARIES */
 
 #include <unistd.h> // write
 #include <stdlib.h> // malloc free
 # include <stdbool.h> // booleanos
 # include <limits.h> // VALORES INT_MIN INT_MAX
+#include <stddef.h> // size_t NULL
 
 #include <stdio.h>  // printf
+
+/* OWN LIBRARIES */
+
+#include "../libft/libft.h"
 
 // ESTRUCTURA DATOS -> LISTA VINCULADA -> STACKS / PILAS
 typedef struct s_stack
@@ -39,8 +44,17 @@ typedef struct s_stack
 // FUNCIONES INICIALIZACION PILA (STACK)  ---------------------------
 // ---------------------------------------------------------------
 
-/// ?? split archivo
-char	**ft_split_1(char *str, char separator);
+/** 
+* @brief Divide una cadena en una matriz de subcadenas 
+según un carácter delimitador.
+* @param str: puntero a la cadena que se va a dividir.
+* @param separator: carácter delimitador utilizado para dividir la cadena.
+* @returns char ** -> Una matriz de cadenas asignada dinámicamente que 
+representa las subcadenas divididas. 
+El último elemento de la matriz se establece en NULL.
+NULL si falla la asignación de memoria o si 'str' es NULL.
+*/
+char	**split(char *str, char separator);
 
 // ARCHIVO 'stack_init.c' -----------------------------
 
@@ -56,47 +70,61 @@ Las verificaciones están integrados en la creación misma:
 para liberar.
 * @returns void
 */
-void	stack_init(t_stack **stack, char **argv, bool flag_argc_2);
+void	stack_init(t_stack **stack, char **argv);
 
-/*
- * Comprobar si una pila determinada está ordenada
+/** 
+* @brief  Comprobar si una pila determinada está ordenada.
+* @param stack t_stack *: puntero a estructura lista vinculada.
+* @returns bool -> true -> stack numeros ordeandos ; false -> no ordenado.
 */
 bool	stack_is_sorted(t_stack *stack);
 
 // ARCHIVO 'free.c' -----------------------------
 
-void ft_free_all(t_stack **stack, char **argv, bool flag_argc_2);
-
-// liberar la matriz 2D creado con la función ft_split() -> ATENCIÓN Tienes que empezar desde -1
-void ft_free_matrix(char **argv);
-
-// LIBERAR MEMORIA STACK
+/** 
+* @brief Libera reserva de memoria del stack utilizado. 
+Borra cada nodo de forma individual y establece puntero stack en nulo.
+* @param stack t_stack **: puntero a lista de nodos stack.
+* @returns void .
+*/
 void	ft_free_stack(t_stack **stack);
-
-// IMPRESION MENSAJE 'Error' en fd = 2
-void ft_print_error(void);
 
 // ARCHIVO 'stack_utils.c' -----------------------------
 
-/*
- * Encuentra el nodo con push_price mas barato (cheapest == true)
+/** 
+* @brief Agrega nuevo nodo al final del stack. 
+Incorpora numero en el atributo 'value'.
+* @param stack t_stack **: puntero a lista de nodos stack.
+* @param number int: valor numerico a incluir en stack->value.
+* @returns void .
+*/
+void    ft_append_node(t_stack **stack, int number);
+
+/** 
+* @brief Encuentra el nodo con atributo 'push_price' 
+mas barato (cheapest == true).
+* @param stack t_stack *: puntero al primer nodo del stack.
+* @returns t_stack * -> puntero a nodo encontrado .
 */
 t_stack	*find_cheapest_node(t_stack *stack);
 
-/*
- * Encuentra el nodo de valor más pequeño
+/** 
+* @brief Encuentra el nodo con atributo 'value' mas pequeño.
+* @param stack t_stack *: puntero al primer nodo del stack.
+* @returns t_stack * -> puntero a nodo encontrado .
 */
 t_stack	*find_smallest_node(t_stack *stack);
 
-void    ft_append_node(t_stack **stack, int number);
-
-// ENCONTRAR ULTIMO NODO DE ESTRUCTURA
+/** 
+* @brief  Retorna puntero al ultimo nodo del stack.
+* @param stack t_stack *: puntero al primer nodo del stack.
+* @returns t_stack * -> puntero ultimo nodo.
+*/
 t_stack	*ft_find_last_node(t_stack *stack);
 
 /** 
-* @brief  Cuenta el número de elementos en una pila (stack).
-Cuenta el número de nodos de un stack.
-* @param stack: puntero al primer nodo del stack.
+* @brief  Cuenta el número de nodos en una pila (stack).
+* @param stack t_stack *: puntero al primer nodo del stack.
 * @returns int -> Número de nodos del stack.
 */
 int	ft_stack_len(t_stack *stack);
@@ -169,19 +197,23 @@ void    ss(t_stack **stack_a, t_stack **stack_b, bool checker);
 // FUNCIONES ALGORITMO ORDENACION  ---------------------
 // ---------------------------------------------------------------
 
-// ARCHIVO 'sort_min.c' --------------------------
+// ARCHIVO 'sort.c' --------------------------
 
-/*
-	Algoritmo ordenamiento 5 argumentos
+/** 
+ * @brief Ordena stack con 5 nodos. 
+* @param stack_a t_stack **: puntero a lista de nodos stack a.
+* @param stack_b t_stack **: puntero a lista de nodos stack b.
+* @returns void.
 */
 void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b);
 
-/*
- * Cuando tengo 3 nodos, es fácil de ordenar
- * ~Si el 1* es el más grande, ra (de mayor a inferior)
- * ~Si el 2* es el más grande, rra (de mayor a abajo)
- * ~ Ahora tengo con fuerza el más grande en la parte inferior.
- * entonces solo reviso 1° y 2°
+/** 
+ * @brief Ordena stack con 3 nodos. Coloca abajo el nodo con valor mas alto:
+ * -Si el 1* es el más grande, ra (de mayor a inferior).
+ * -Si el 2* es el más grande, rra (de mayor a abajo).
+ * Posteriormente ordena los 2 elementos restantes.
+* @param stack t_stack **: puntero a lista de nodos stack.
+* @returns void.
 */
 void tiny_sort_three(t_stack **stack);
 

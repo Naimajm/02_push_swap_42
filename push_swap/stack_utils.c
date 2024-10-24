@@ -6,64 +6,23 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 14:11:52 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/21 12:56:47 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 10:04:21 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-t_stack	*find_cheapest_node(t_stack *stack)
-{
-	// VALIDACION INICIAL
-	if (stack == NULL)
-		return (NULL);
-	while (stack != NULL)
-	{
-		if (stack->cheapest_cost == true)
-			return (stack);
-		stack = stack->next;
-	}
-	return (NULL);
-}
-
-t_stack	*find_smallest_node(t_stack *stack)
-{
-	long	smallest_number;
-	t_stack	*smallest_node;
-
-	// VALIDACION INICIAL 
-	if (stack == NULL)
-		return (NULL);
-	
-	smallest_number = LONG_MAX;
-	while (stack != NULL)
-	{
-		if (stack->value < smallest_number)
-		{ 
-			smallest_number = stack->value; // cambio a num temporal + pequeño
-			smallest_node = stack; // capturamos nodo del num temporal + pequeño
-		}
-		stack = stack->next;
-	}
-	return (smallest_node);
-}
-
-/* void    ft_append_node(t_stack **stack, int number)
+void    ft_append_node(t_stack **stack, int number)
 {
     t_stack *node;
 	t_stack	*last_node;
-
-	// VALIDACION INICIAL PARAMETROS (stack no inicializado)
-	if (stack == NULL)
+	
+	if (stack == NULL) // VALIDACION INICIAL PARAMETROS
 		return ;
 	// RESERVA MEMORIA NODO
 	node = malloc(sizeof(t_stack));
-	//node = ft_calloc(1, sizeof(t_stack));
 	if (node == NULL)
-	{	
-		//ft_print_error();
 		return ;
-	}
 
 	// INICIALIZAR VALORES NUEVO NODO	
 	node->next = NULL;
@@ -81,38 +40,47 @@ t_stack	*find_smallest_node(t_stack *stack)
 		last_node->next = node;
 		node->prev = last_node;
 	}    
-} */
+}
 
-void	ft_append_node(t_stack **stack, int nbr)
+t_stack	*find_cheapest_node(t_stack *stack)
+{	
+	if (stack == NULL) // VALIDACION INICIAL PARAMETROS
+		return (NULL);
+	while (stack)
+	{
+		if (stack->cheapest_cost == true)
+			return (stack);
+		stack = stack->next;
+	}
+	return (NULL);
+}
+
+t_stack	*find_smallest_node(t_stack *stack)
 {
-	t_stack	*node;
-	t_stack	*last_node;
-
-	if (NULL == stack)
-		return ;
-	node = malloc(sizeof(t_stack));
-	if (NULL == node)
-		return ;
-	node->next = NULL;
-	node->value = nbr;
-	if (NULL == *stack)
+	long	smallest_number;
+	t_stack	*smallest_node;
+	 
+	if (stack == NULL) // VALIDACION INICIAL PARAMETROS
+		return (NULL);
+	
+	smallest_number = LONG_MAX;
+	while (stack)
 	{
-		*stack = node;
-		node->prev = NULL;
+		if (stack->value < smallest_number)
+		{ 
+			smallest_number = stack->value; // cambio a num temporal + pequeño
+			smallest_node = stack; // capturamos nodo del num temporal + pequeño
+		}
+		stack = stack->next;
 	}
-	else
-	{
-		last_node = ft_find_last_node(*stack);
-		last_node->next = node;
-		node->prev = last_node;
-	}
+	return (smallest_node);
 }
 
 t_stack	*ft_find_last_node(t_stack *node)
-{
-	// VALIDACION INICIAL
-	if (node == NULL)
+{	
+	if (node == NULL) // VALIDACION INICIAL PARAMETROS
 		return (NULL);
+		
 	// CICLO BUSQUEDA ULTIMO NODO CON stack->next NULO
 	while (node->next)
 		node = node->next;
@@ -126,7 +94,7 @@ int	ft_stack_len(t_stack *stack)
 	if (stack == NULL)
 		return (0);
 	len = 0;
-	while (stack != NULL)
+	while (stack)
 	{		
 		len++;
 		stack = stack->next;

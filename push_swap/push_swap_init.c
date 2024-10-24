@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:06:25 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/23 13:42:55 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 13:43:56 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	set_target_node(t_stack *stack_a, t_stack *stack_b);
 
-void	init_nodes(t_stack *stack_a, t_stack *stack_b)
+/* void	init_nodes(t_stack *stack_a, t_stack *stack_b)
 {
 	//printf("init_nodes() \n");
 
@@ -32,9 +32,18 @@ void	init_nodes(t_stack *stack_a, t_stack *stack_b)
 	set_cheapest_node(stack_b);	
 
 	//printf("fin  init_nodes() \n");
+} */
+
+void	init_nodes(t_stack *a, t_stack *b)
+{
+	set_current_position(a);
+	set_current_position(b);
+	set_target_node(a, b);
+	set_push_price(a, b);
+	set_cheapest_node(b);
 }
 
-void	set_cheapest_node(t_stack *stack_b)
+/* void	set_cheapest_node(t_stack *stack_b)
 {
 	long	best_match_value;
 	t_stack	*best_match_node;
@@ -53,17 +62,36 @@ void	set_cheapest_node(t_stack *stack_b)
 		stack_b = stack_b->next;
 	}
 	best_match_node->cheapest_cost = true; // asignacion a nodo mas barato segun configuracion
+} */
+
+void	set_cheapest_node(t_stack *b)
+{
+	long			best_match_value;
+	t_stack	*best_match_node;
+
+	if (NULL == b)
+		return ;
+	best_match_value = LONG_MAX;
+	while (b)
+	{
+		if (b->push_price < best_match_value)
+		{
+			best_match_value = b->push_price;
+			best_match_node = b;
+		}
+		b = b->next;
+	}
+	best_match_node->cheapest_cost = true;
 }
 
-void	set_push_price(t_stack *stack_a, t_stack *stack_b)
+/* void	set_push_price(t_stack *stack_a, t_stack *stack_b)
 {
 	int	stack_len_a;
 	int	stack_len_b;
 	t_stack	*target_node_a;
 
 	stack_len_a = ft_stack_len(stack_a);
-	stack_len_b = ft_stack_len(stack_b);
-	
+	stack_len_b = ft_stack_len(stack_b);	
 
 	while (stack_b != NULL)
 	{
@@ -79,6 +107,26 @@ void	set_push_price(t_stack *stack_a, t_stack *stack_b)
 			stack_b->push_price = stack_b->push_price - (stack_len_a - target_node_a->current_position);
 		stack_b = stack_b->next;
 	}	
+} */
+
+void	set_push_price(t_stack *a, t_stack *b)
+{
+	int	len_a;
+	int	len_b;
+
+	len_a = ft_stack_len(a);
+	len_b = ft_stack_len(b);
+	while (b)
+	{
+		b->push_price = b->current_position;
+		if (!(b->above_median))
+			b->push_price = len_b - (b->current_position);
+		if (b->target_node->above_median)
+			b->push_price += b->target_node->current_position;
+		else
+			b->push_price += len_a - (b->target_node->current_position);
+		b = b->next;
+	}
 }
 
 /* void	set_push_price(t_stack *stack_a, t_stack *stack_b)
@@ -101,7 +149,7 @@ void	set_push_price(t_stack *stack_a, t_stack *stack_b)
 	}
 } */
 
-void	set_current_position(t_stack *stack)
+/* void	set_current_position(t_stack *stack)
 {
 	int	index_position;		// CONTADOR PARA MARCAR POSICION
 	int	central_line;
@@ -122,6 +170,27 @@ void	set_current_position(t_stack *stack)
 		index_position++;
 		stack = stack->next;
 	}
+} */
+
+void	set_current_position(t_stack *stack)
+{
+	int	i;
+	int	centerline;
+
+	i = 0;
+	if (NULL == stack)
+		return ;
+	centerline = ft_stack_len(stack) / 2;
+	while (stack)
+	{
+		stack->current_position = i;
+		if (i <= centerline)
+			stack->above_median = true;
+		else
+			stack->above_median = false;
+		stack = stack->next;
+		++i;
+	}
 }
 
 /*
@@ -131,7 +200,7 @@ void	set_current_position(t_stack *stack)
 	Ese nodo será el siguiente donde colocar el nodo de stack b.
 	Con esta función cada nodo en b obtiene su nodo objetivo en a.
 */
-static void	set_target_node(t_stack *stack_a, t_stack *stack_b)
+/* static void	set_target_node(t_stack *stack_a, t_stack *stack_b)
 {
 	t_stack	*current_node_a;  // nodo actual stack a
 	t_stack	*targe_node;  // puntero al nodo objetivo a del nodo de stack b
@@ -159,4 +228,33 @@ static void	set_target_node(t_stack *stack_a, t_stack *stack_b)
 			stack_b->target_node = targe_node;
 		stack_b = stack_b->next;
 	}	
-} 
+}  */
+
+static void	set_target_node(t_stack *a,
+							t_stack *b)
+{
+	t_stack	*current_a;
+	t_stack	*target_node;
+	long			best_match_index;
+
+	while (b)
+	{
+		best_match_index = LONG_MAX;
+		current_a = a;
+		while (current_a)
+		{
+			if (current_a->value > b->value
+				&& current_a->value < best_match_index)
+			{
+				best_match_index = current_a->value;
+				target_node = current_a;
+			}
+			current_a = current_a->next;
+		}
+		if (LONG_MAX == best_match_index)
+			b->target_node = find_smallest_node(a);
+		else
+			b->target_node = target_node;
+		b = b->next;
+	}
+}

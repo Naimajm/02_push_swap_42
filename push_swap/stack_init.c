@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:15:28 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 11:54:40 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:05:35 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,46 +15,6 @@
 static int	ft_check_duplicate_numbers(t_stack *stack_a, int number);
 static int	ft_error_syntax(char *str_numbers);
 static long	ft_atol(const char *str);
-
-/* void	stack_init(t_stack **stack, char **argv, bool flag_argc_2)
-{
-	long number;
-	int	index;
-
-	index = 0;
-
-	// para cada argumento string -> validar, convertir a numero y añadir a nodo
-	while (argv[index])
-	{	
-		// VALIDACION ERRORES SINTACTICOS -> ARG STRING VALIDOS
-		if (ft_error_syntax(argv[index]))
-		{
-			ft_print_error();
-			ft_free_all(stack, argv, flag_argc_2);
-		}
-		// CONVERSION ARGUMENTO STR A NUMERO
-		number = ft_atol(argv[index]);
-		//printf("stack_init() -> number atol()-> %li \n", number);
-
-		// VALIDACION NUMEROS ENTEROS MAXIMOS Y MINIMOS -> NUMEROS NO VALIDOS
-		if ( number < INT_MIN || number > INT_MAX )
-		{
-			ft_print_error();
-			ft_free_all(stack, argv, flag_argc_2);
-		}
-		// VALIDACION NUMBER CON NUMEROS EN LOS NODOS YA CREADOS
-		if (ft_check_duplicate_numbers(*stack, (int)number))
-		{
-			ft_print_error();
-			ft_free_all(stack, argv, flag_argc_2);
-		}
-		// AÑADIR VALOR EN NUEVO NODO
-		ft_append_node(stack, (int)number);		
-		index++;
-	}
-	if (flag_argc_2)
-		ft_free_matrix(argv);	
-} */
 
 void	stack_init(t_stack **stack, char **argv)
 {
@@ -69,8 +29,9 @@ void	stack_init(t_stack **stack, char **argv)
 		// VALIDACION ERRORES SINTACTICOS -> ARG STRING VALIDOS
 		if (ft_error_syntax(argv[index]))
 		{
-			ft_print_error(2);
+			ft_putstr_fd("Error\n", 2);
 			ft_free_stack(stack);
+			exit(1);
 		}
 		// CONVERSION ARGUMENTO STR A NUMERO
 		number = ft_atol(argv[index]);
@@ -79,14 +40,16 @@ void	stack_init(t_stack **stack, char **argv)
 		// VALIDACION NUMEROS ENTEROS MAXIMOS Y MINIMOS -> NUMEROS NO VALIDOS
 		if ( number < INT_MIN || number > INT_MAX )
 		{
-			ft_print_error(2);
+			ft_putstr_fd("Error\n", 2);
 			ft_free_stack(stack);
+			exit(1);
 		}
 		// VALIDACION NUMBER CON NUMEROS EN LOS NODOS YA CREADOS
 		if (ft_check_duplicate_numbers(*stack, (int)number))
 		{
-			ft_print_error(2);
+			ft_putstr_fd("Error\n", 2);
 			ft_free_stack(stack);
+			exit(1);
 		}
 		// AÑADIR VALOR EN NUEVO NODO
 		ft_append_node(stack, (int)number);		

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sort_min.c                                         :+:      :+:    :+:   */
+/*   sort.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 12:28:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/21 12:43:15 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 11:11:05 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,87 +14,44 @@
 
 static t_stack	*find_highest_node(t_stack *stack);
 
-/* void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
+void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
 {
-	int	stack_len_a;
-	t_stack	*smallest_node;
-
-	stack_len_a = ft_stack_len(*stack_a);
-	smallest_node = find_smallest_node(*stack_a);
-
-	printf("tiny_sort_five()-> smallest_node -> %p", smallest_node);
-
-	while (stack_len_a > 3)
+	while (ft_stack_len(*stack_a) > 3)
 	{
-		init_nodes(*stack_a, *stack_b);
-
-		// IMPRESION STACK
-		t_stack *stack_copy_a = *stack_a;
-		while (stack_copy_a)  
-		{
-			printf( "tiny_sort_five() -> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_a->value, stack_copy_a->prev, stack_copy_a, stack_copy_a->next );
-			stack_copy_a = stack_copy_a->next;
-		}
-		
-		finish_rotation(stack_a, smallest_node, 'a');
+		init_nodes(*stack_a, *stack_b);			
+		finish_rotation(stack_a, find_smallest_node(*stack_a), 'a');
 		pb(stack_b, stack_a, false);	// push to stack b	
 	}
-} */
-void	tiny_sort_five(t_stack **a, t_stack **b)
-{
-	while (ft_stack_len(*a) > 3)
-	{
-		init_nodes(*a, *b);
-		finish_rotation(a, find_smallest_node(*a), 'a');
-		pb(b, a, false);
-	}
 }
 
-/*
- * Cuando tengo 3 nodos, es fácil de ordenar
- * ~Si el 1* es el más grande, ra (de mayor a inferior)
- * ~Si el 2* es el más grande, rra (de mayor a abajo)
- * ~ Ahora tengo con fuerza el más grande en la parte inferior.
- * entonces solo reviso 1° y 2°
-*/
-/* void	tiny_sort_three(t_stack **stack)
+void	tiny_sort_three(t_stack **stack)
 {
-	t_stack	*first_node;
-    t_stack *highest_node; // nodo con numero mas alto
+    t_stack *highest_node; 
 
-	first_node = *stack;
     highest_node = find_highest_node(*stack);
-	if (first_node == highest_node)  // 1º nodo numero + alto
+	// COLOCAR ABAJO EL VALOR MAS ALTO
+	if (*stack == highest_node)  // 1º nodo numero + alto
 		ra(stack, false);
-	else if (first_node->next == highest_node) // 2º nodo numero + alto
+	else if ((*stack)->next == highest_node) // 2º nodo numero + alto
 		rra(stack, false);
-	// ordenar 2 elementos (una vez el valor mayor se coloca abajo)
-	if (first_node->value > first_node->next->value)
+		
+	// ORDENAR 2 ELEMENTOS (una vez el valor mayor se coloca abajo)
+	if ((*stack)->value > (*stack)->next->value)
 		sa(stack, false);    
-} */
-
-void	tiny_sort_three(t_stack **a)
-{
-	t_stack	*highest_node;
-
-	highest_node = find_highest_node(*a);
-	if (*a == highest_node)
-		ra(a, false);
-	else if ((*a)->next == highest_node)
-		rra(a, false);
-	if ((*a)->value > (*a)->next->value)
-		sa(a, false);
 }
 
+/** 
+* @brief Encuentra el nodo con atributo 'value' mas grande.
+* @param stack t_stack *: puntero al primer nodo del stack.
+* @returns t_stack * -> puntero a nodo encontrado .
+*/
 static t_stack	*find_highest_node(t_stack *stack)
 {
 	int	highest_number;
 	t_stack	*highest_node;
-
-	//VALIDACION INICIAL ARGUMENTOS
-	if (stack == NULL)
+	
+	if (stack == NULL) //VALIDACION INICIAL ARGUMENTOS
 		return (NULL);
-
 	highest_number = INT_MIN;
 	while (stack != NULL)
 	{

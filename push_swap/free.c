@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 13:40:08 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 11:58:01 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:05:20 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,8 @@ void	ft_free_stack(t_stack **stack)
 		free(current_node);
 		current_node = tmp_node;
 	}
-	*stack= NULL; // redireccionar ptr stack a nulo
-	exit(1);
+	*stack= NULL; // redireccionar ptr stack a nulo	
 }
 
-void ft_print_error(int file_descriptor)
-{
-	ft_putstr_fd("Error\n", file_descriptor);
-}
 
 

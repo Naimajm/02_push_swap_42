@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 22:05:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 23:41:46 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:52:06 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void    rrr(t_stack **stack_a, t_stack **stack_b, bool checker)
         ft_putstr_fd("rrr\n", 1);
 }
 
-static void ft_reverse_rotate(t_stack **stack)
+/* static void ft_reverse_rotate(t_stack **stack)
 {
     t_stack *last_node;
     int stack_len;
@@ -58,6 +58,22 @@ static void ft_reverse_rotate(t_stack **stack)
     last_node->next = *stack; // conectar antiguo ultimo nodo a antiguo 1º nodo    
     *stack = last_node;  // NUEVO PUNTERO STACK  a nuevo 1º nodo
     last_node->next->prev = last_node; // conectar antiguo 1º nodo a nuevo 1º nodo        
+} */
+
+static void	ft_reverse_rotate(t_stack **stack)
+{
+	t_stack	*last;
+	int				len;
+
+	len = ft_stack_len(*stack);
+	if (NULL == *stack || NULL == stack || 1 == len)
+		return ;
+	last = ft_find_last_node(*stack);
+	last->prev->next = NULL;
+	last->next = *stack;
+	last->prev = NULL;
+	*stack = last;
+	last->next->prev = last;
 }
 
 /* int main(void)

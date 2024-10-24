@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:26:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/23 13:50:10 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:44:09 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,6 @@ void	push_swap(t_stack **a, t_stack **b)
 	if (len_a == 5)
 	{
 		//printf("push_swap() tiny_sort_five() \n");
-		//while (len_a-- > 3)
-			//pb(b, a, false);
 		tiny_sort_five(a, b);
 	}
 	else
@@ -87,14 +85,14 @@ void	push_swap(t_stack **a, t_stack **b)
 	}
 	//printf("push_swap() tiny_sort_three() \n");
 	// IMPRESION STACK A	
-	t_stack *stack_copy_a;
+	/* t_stack *stack_copy_a;
 	stack_copy_a = *a;
 	while (stack_copy_a)  
 	{
 		//printf( "push_swap() stack -> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_a->value, stack_copy_a->prev, stack_copy_a, stack_copy_a->next );
 		stack_copy_a = stack_copy_a->next;
 	}
-
+ */
 	tiny_sort_three(a);
 
 	//printf("push_swap() inicio ciclo init node() \n");
@@ -125,6 +123,8 @@ void	push_swap(t_stack **a, t_stack **b)
 		while (*a != smallest)
 			rra(a, false);
 }
+
+
 
 /*
  * Mueve el nodo de 'b' a 'a' con los metadatos disponibles en el nodo
@@ -172,7 +172,9 @@ static void	move_nodes(t_stack **a, t_stack **b)
 	pa(a, b, false);
 }
 
-void	finish_rotation(t_stack **stack, t_stack *top_node, char stack_name)
+
+
+/* void	finish_rotation(t_stack **stack, t_stack *top_node, char stack_name)
 {
 	while (*stack != top_node)
 	{
@@ -191,13 +193,36 @@ void	finish_rotation(t_stack **stack, t_stack *top_node, char stack_name)
 				rrb(stack, false);
 		}
 	}
+} */
+
+void	finish_rotation(t_stack **stack,
+							t_stack *top_node,
+							char stack_name)
+{
+	while (*stack != top_node)
+	{
+		if (stack_name == 'a')
+		{
+			if (top_node->above_median)
+				ra(stack, false);
+			else
+				rra(stack, false);
+		}
+		else if (stack_name == 'b')
+		{
+			if (top_node->above_median)
+				rb(stack, false);
+			else
+				rrb(stack, false);
+		}	
+	}
 }
 
 /*
 	Ejecuta 'rotacion rr' para cada nodo hasta q el 1º nodo sea el cheapest_node en el stack b
 	y el target_node en el stack a	
 */
-static	void	rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest_node)
+/* static	void	rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest_node)
 {
 	t_stack	*target_node;
 
@@ -209,13 +234,24 @@ static	void	rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest_
 	// ACTUALIZAR POSICIONES DESPUES DE ROTACION
 	set_current_position(*stack_a);
 	set_current_position(*stack_b);	
+} */
+
+static void	rotate_both(t_stack **a,
+						t_stack **b,
+						t_stack *cheapest_node)
+{
+	while (*a != cheapest_node->target_node
+		&& *b != cheapest_node)
+		rr(a, b, false);
+	set_current_position(*a);
+	set_current_position(*b);
 }
 
 /*
 	Ejecuta 'reverse rotacion' 'rrr' para cada nodo hasta q el 1º nodo sea el cheapest_node en el stack b
 	y el target_node en el stack a	
 */
-static	void	reverse_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest_node)
+/* static	void	reverse_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *cheapest_node)
 {
 	t_stack	*target_node;
 
@@ -227,6 +263,17 @@ static	void	reverse_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *c
 	// ACTUALIZAR POSICIONES DESPUES DE ROTACION
 	set_current_position(*stack_a);
 	set_current_position(*stack_b);	
+} */
+
+static void	reverse_rotate_both(t_stack **a,
+								t_stack **b,
+								t_stack *cheapest_node)
+{
+	while (*a != cheapest_node->target_node
+		&& *b != cheapest_node)
+		rrr(a, b, false);
+	set_current_position(*a);
+	set_current_position(*b);
 }
 
 

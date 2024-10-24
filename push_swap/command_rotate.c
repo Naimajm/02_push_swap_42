@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:03:11 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/16 23:41:39 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 12:50:44 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void    rb(t_stack **stack_b, bool checker)
         ft_putstr_fd("rb\n", 1);
 }
 
+
+
 void    rr(t_stack **stack_a, t_stack **stack_b, bool checker)
 {
     ft_rotate(stack_a);
@@ -42,7 +44,7 @@ Atención si la pila src está vacía (NULL).
 * @param stack : stack.
 * @returns void.
 */
-static void ft_rotate(t_stack **stack)
+/* static void ft_rotate(t_stack **stack)
 {
     t_stack *node_to_rotate; // 1º nodo a mover
     t_stack *last_node;    
@@ -73,6 +75,22 @@ static void ft_rotate(t_stack **stack)
     node_to_rotate->next = NULL; // conexion nuevo ultimo nodo a nulo
     //printf("antiguo ultimo nodo-> \t prev -> %p \t address -> %p \t next -> %p \n", last_node->prev, last_node, last_node->next);
     //printf("nuevo ultimo nodo-> \t prev -> %p \t address -> %p \t next -> %p \n", node_to_rotate->prev, node_to_rotate, node_to_rotate->next);
+} */
+
+static void	ft_rotate(t_stack **stack)
+{
+	t_stack	*last_node;
+	int				len;
+
+	len = ft_stack_len(*stack);
+	if (NULL == stack || NULL == *stack || 1 == len)
+		return ;
+	last_node = ft_find_last_node(*stack);
+	last_node->next = *stack;
+	*stack = (*stack)->next;
+	(*stack)->prev = NULL;
+	last_node->next->prev = last_node;
+	last_node->next->next = NULL;
 }
 /* 
 int main(void)

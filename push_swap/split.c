@@ -6,14 +6,11 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:38:00 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/23 11:38:02 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/24 19:02:37 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
-
 #include "push_swap.h"
-#include <stddef.h>
 
 /*
  * Args at the command line are
@@ -84,7 +81,7 @@ static char	*get_next_word(char *str, char separator)
  * 				 |->[..]->"..""
  * 				 |->[NULL]
 */
-char	**ft_split_1(char *str, char separator)
+char	**split(char *str, char separator)
 {
 	int		words_number;
 	char	**vector_strings;
