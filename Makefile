@@ -27,8 +27,8 @@ DARK_YELLOW         = \033[38;5;143m
 # ---------------------------------------------------
 
 # NOMBRE SALIDA ARCHIVO COMPILADO
-NAME = push_swap
-NAME_BONUS = checker
+NAME := push_swap
+NAME_BONUS := checker
 
 # VARIABLES -----------------------------------------
 # ---------------------------------------------------
@@ -61,10 +61,10 @@ GET_NEXT_LINE_ARCHIVE 	:= ${GET_NEXT_LINE_DIR}/get_next_line.a
 # ---------------------------------------------------
 # LISTADO ARCHIVOS A INCLUIR EN BIBLIOTECA
 
-SRC := stack_init.c stack_utils.c split.c \
-free.c sort.c \
-command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
-push_swap_init.c push_swap_command.c \
+SRC := $(OBJS_DIR)/stack_init.c $(OBJS_DIR)/stack_utils.c $(OBJS_DIR)/split.c \
+$(OBJS_DIR)/free.c $(OBJS_DIR)/sort.c \
+$(OBJS_DIR)/command_push.c $(OBJS_DIR)/command_rotate.c $(OBJS_DIR)/command_reverse_rotate.c $(OBJS_DIR)/command_swap.c \
+$(OBJS_DIR)/push_swap_init.c $(OBJS_DIR)/push_swap_command.c \
 
 SRC_BONUS := checker.c \
 
@@ -75,7 +75,7 @@ OBJ_FILES_BONUS := $(SRC_BONUS:%.c=%.o)
 # OBJ_FILES		= $(patsubst ${OBJ_DIR}/%.c, ${OBJ_DIR}/%.o, ${SRC})
 
 OBJS_DIR		:= ./push_swap
-OBJS_BONUS_DIR	:= ./bonus
+OBJS_DIR_BONUS	:= ./bonus
 
 # The %.o: %.c rule is used to compile the object files.
 # $< is used to get the first dependency.
@@ -100,7 +100,7 @@ $(NAME): ft_libft ft_get_next_line $(OBJ_FILES)
 	@make -C $(LIBFT_DIR)
 	@make -C $(GET_NEXT_LINE_DIR)
 
-	@${CC} ${CFLAGS} -o ${NAME}  $(OBJS_DIR)$(OBJ_FILES) $(LIBFT_ARCHIVE)	
+	@${CC} ${CFLAGS} -o ${NAME} $(OBJS_DIR)/$(OBJ_FILES) $(LIBFT_ARCHIVE)	
 
 	@echo "$(DARK_GREEN)$(NAME) has been created ✓$(DEF_COLOR)"
 
@@ -110,7 +110,7 @@ $(NAME): ft_libft ft_get_next_line $(OBJ_FILES)
 bonus: $(NAME_BONUS)
 
 ${NAME_BONUS}: ftlibft ftprintf ${OBJ_FILES} ${OBJ_FILES_BONUS}
-	@echo "$(ORANGE)📌​ Compiling Bonus 🠲 $(DEF_COLOR)"
+	@echo "$(ORANGE)📌​ Compiling Bonus 🠲 $(NAME_BONUS) $(DEF_COLOR)"
  
 	@${CC} ${CFLAGS} -o ${NAME} $(OBJ_FILES) $(OBJ_FILES_BONUS) $(LIBFT_ARCHIVE) $(GET_NEXT_LINE_ARCHIVE)
 			
@@ -141,14 +141,14 @@ clean:
 	@make clean -C $(LIBFT_DIR)
 	@make clean -C $(GET_NEXT_LINE_DIR)
 
-	echo "${DARK_GREEN}Cleaning objects ${NAME}...is done! ${DEF_COLOR}"
+	@echo "${DARK_GREEN}Cleaning objects ${NAME}...is done! ${DEF_COLOR}"
 
 # ejecuta clean + borrado archivo '.a'
 fclean: clean
 	@echo "${ORANGE}🗑️ Removing files *.a...${NAME}... ${DEF_COLOR}"
 
-	@rm -f $(NAME)
-	@rm -f $(NAME_BONUS)
+	@rm -f push_swap/push_swap
+#@rm -f $(OBJS_DIR_BONUS)/$(NAME_BONUS)
 	@make fclean -C $(LIBFT_DIR)
 	@make fclean -C $(GET_NEXT_LINE_DIR)
 
