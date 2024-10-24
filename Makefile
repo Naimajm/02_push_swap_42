@@ -162,5 +162,5 @@ fclean: clean
 # NUEVA COMPILACION CON RECETA $(NAME)
 re: fclean all
 
-.PHONY: all clean fclean re ft_libft ft_get_next_line
+.PHONY: all clean fclean re ft_libft ft_get_next_line bonus
 
