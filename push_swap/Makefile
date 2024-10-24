@@ -1,5 +1,5 @@
 
-# ARCHIVO MAKEFILE PROYECTO 42 "PUSH_SWAP" --------------------------------
+# ARCHIVO MAKEFILE BASICO PROYECTO 42 "PUSH_SWAP" --------------------------------
 
 # VARIABLES -----------------------------------------
 # ---------------------------------------------------
@@ -16,16 +16,11 @@ CFLAGS := -Wall -Wextra -Werror
 # COMPRESION A 1 ARCHIVO
 MAKE_LIBRARY = ar -rcs
 
-# SUBCARPETA PARTE OBLIGATORIA -> SRC
-# SRC_DIR := push_swap
-
 # LISTADO FUNCIONES A INCLUIR EN BIBLIOTECA
-SRC := stack_init.c stack_utils.c \
-free.c \
+SRC := split.c stack_init.c stack_utils.c \
+free.c sort.c \
 command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
-sort_min.c \
 push_swap_init.c push_swap_command.c \
-split.c \
 
 # libft.a
 
