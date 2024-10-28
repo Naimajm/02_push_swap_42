@@ -64,11 +64,16 @@ all: $(NAME) # receta predeterminada
 # -c flag is used to compile the source files.
 
 # FUNCION PPAL -> CREACION ARCHIVO COMPILADO
-$(NAME): $(OBJ_FILES) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
+#$(NAME): $(OBJ_FILES) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
+$(NAME): $(LIBRARY) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
 	@echo "$(ORANGE)📌​ Compiling $(NAME)... $(DEF_COLOR)"
 	$(CC) ${CFLAGS} $^ -o $(NAME)
 ##$(MAKE_LIBRARY) $(NAME) $(OBJ_FILES) 
 	@echo "$(DARK_GREEN)$(NAME) has been created ✓$(DEF_COLOR)"
+
+# FUNCION SECUNDARIA -> LIBRERIA 'push_swap.a' para exe 'push_swap' y 'checker' bonus
+$(LIBRARY) : $(OBJ_FILES) 
+	$(MAKE_LIBRARY) $(LIBRARY) $^ 
 
 # FUNCION LIBRERIA LIBFT -> CREACION ARCHIVO LIBRERIA
 $(LIBFT_ARCHIVE) :

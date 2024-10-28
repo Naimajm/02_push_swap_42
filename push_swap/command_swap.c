@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:32:35 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 12:49:14 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:29:28 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,36 @@
 
 static void ft_swap(t_stack **stack);
 
-void    sa(t_stack **stack_a, bool checker)
+void    sa(t_stack **stack_a, bool print)
 {
     ft_swap(stack_a);
-    if (!checker)
+    if (print)
         ft_putstr_fd("sa\n", 1);
 }
 
-void    sb(t_stack **stack_b, bool checker)
+void    sb(t_stack **stack_b, bool print)
 {
     ft_swap(stack_b);
-    if (!checker)
+    if (print)
         ft_putstr_fd("sb\n", 1);
 }
 
-void    ss(t_stack **stack_a, t_stack **stack_b, bool checker)
+void    ss(t_stack **stack_a, t_stack **stack_b, bool print)
 {
     ft_swap(stack_a);
     ft_swap(stack_b);
-    if (!checker)
+    if (print)
         ft_putstr_fd("ss\n", 1);
 }
 
-/* static void ft_swap(t_stack **stack)
+/** 
+* @brief Intercambia el 1º nodo de posición con el 2º nodo de un stack.
+Atención si la pila src está vacía (NULL). Planteamiento con stack dest 
+vacio o con algun nodo existente.
+* @param stack_dest t_stack **: dirección puntero al primer nodo del stack.
+* @returns void.
+*/
+static void ft_swap(t_stack **stack)
 {
     t_stack *new_first_node;
     t_stack *new_second_node;   
@@ -78,22 +85,6 @@ void    ss(t_stack **stack_a, t_stack **stack_b, bool checker)
     // conectar nuevo 2º nodo->prev a nuevo 1º nodo
     new_second_node->prev = new_first_node;    
     //printf("new_second_node->prev-> %p \n", new_second_node->prev);
-} */
-
-static void	ft_swap(t_stack **head)
-{
-	int	len;
-
-	len = ft_stack_len(*head);
-	if (NULL == *head || NULL == head || 1 == len)
-		return ;
-	*head = (*head)->next;
-	(*head)->prev->prev = *head;
-	(*head)->prev->next = (*head)->next;
-	if ((*head)->next)
-		(*head)->next->prev = (*head)->prev;
-	(*head)->next = (*head)->prev;
-	(*head)->prev = NULL;
 }
 
 /* int	main(void)

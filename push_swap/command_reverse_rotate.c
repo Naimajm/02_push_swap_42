@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 22:05:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 12:52:06 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:17:29 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 static void ft_reverse_rotate(t_stack **stack);
 
-void    rra(t_stack **stack_a, bool checker)
+void    rra(t_stack **stack_a, bool print)
 {
     ft_reverse_rotate(stack_a);
-    if (!checker)
+    if (print)
         ft_putstr_fd("rra\n", 1);
 }
 
-void    rrb(t_stack **stack_b, bool checker)
+void    rrb(t_stack **stack_b, bool print)
 {
     ft_reverse_rotate(stack_b);
-    if (!checker)
+    if (print)
         ft_putstr_fd("rrb\n", 1);
 }
 
-void    rrr(t_stack **stack_a, t_stack **stack_b, bool checker)
+void    rrr(t_stack **stack_a, t_stack **stack_b, bool print)
 {
     ft_reverse_rotate(stack_a);
     ft_reverse_rotate(stack_b);
-    if (!checker)
+    if (print)
         ft_putstr_fd("rrr\n", 1);
 }
 
-/* static void ft_reverse_rotate(t_stack **stack)
+static void ft_reverse_rotate(t_stack **stack)
 {
     t_stack *last_node;
     int stack_len;
@@ -58,22 +58,6 @@ void    rrr(t_stack **stack_a, t_stack **stack_b, bool checker)
     last_node->next = *stack; // conectar antiguo ultimo nodo a antiguo 1º nodo    
     *stack = last_node;  // NUEVO PUNTERO STACK  a nuevo 1º nodo
     last_node->next->prev = last_node; // conectar antiguo 1º nodo a nuevo 1º nodo        
-} */
-
-static void	ft_reverse_rotate(t_stack **stack)
-{
-	t_stack	*last;
-	int				len;
-
-	len = ft_stack_len(*stack);
-	if (NULL == *stack || NULL == stack || 1 == len)
-		return ;
-	last = ft_find_last_node(*stack);
-	last->prev->next = NULL;
-	last->next = *stack;
-	last->prev = NULL;
-	*stack = last;
-	last->next->prev = last;
 }
 
 /* int main(void)
@@ -95,14 +79,12 @@ static void	ft_reverse_rotate(t_stack **stack)
         printf("STACK A -> value -> %d \t prev -> %p \t address -> %p \t next -> %p \n", initial_stack->value, initial_stack->prev, initial_stack, initial_stack->next);
         initial_stack = initial_stack->next;
     }
-
     // TRANSFORMACION
     printf("\nPROCESO TRANSFORMACION --------\n");
     //ft_reverse_rotate(&stack_a);
     rra(&stack_a, false);
     
     printf("------------ \n");
-
     printf("\nESTADO FINAL STACKS --------\n");
     while (stack_a)
     {

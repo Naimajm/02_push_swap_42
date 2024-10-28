@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:53 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 12:06:22 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:28:43 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int argc, char **argv)
 		if (ft_stack_len(stack_a) == 2)
 		{
 			//printf("main() sa() -> \n");
-			sa(&stack_a, false);
+			sa(&stack_a, true);
 		}
 		else if (ft_stack_len(stack_a) == 3)
 		{

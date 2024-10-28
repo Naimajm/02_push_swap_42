@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 12:28:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 11:11:05 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:30:18 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
 	{
 		init_nodes(*stack_a, *stack_b);			
 		finish_rotation(stack_a, find_smallest_node(*stack_a), 'a');
-		pb(stack_b, stack_a, false);	// push to stack b	
+		pb(stack_b, stack_a, true);	// push to stack b	
 	}
 }
 
@@ -31,13 +31,13 @@ void	tiny_sort_three(t_stack **stack)
     highest_node = find_highest_node(*stack);
 	// COLOCAR ABAJO EL VALOR MAS ALTO
 	if (*stack == highest_node)  // 1º nodo numero + alto
-		ra(stack, false);
+		ra(stack, true);
 	else if ((*stack)->next == highest_node) // 2º nodo numero + alto
-		rra(stack, false);
+		rra(stack, true);
 		
 	// ORDENAR 2 ELEMENTOS (una vez el valor mayor se coloca abajo)
 	if ((*stack)->value > (*stack)->next->value)
-		sa(stack, false);    
+		sa(stack, true);    
 }
 
 /** 

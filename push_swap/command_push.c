@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 20:43:29 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 12:46:09 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:15:36 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 static  void ft_push(t_stack **stack_dest, t_stack **stack_src);
 
-void    pa(t_stack **stack_a, t_stack **stack_b, bool checker)
+void    pa(t_stack **stack_a, t_stack **stack_b, bool print)
 {
     ft_push(stack_a, stack_b);
-    if (!checker)
+    if (print)
         ft_putstr_fd("pa\n", 1);    
 }
 
-void    pb(t_stack **stack_b, t_stack **stack_a, bool checker)
+void    pb(t_stack **stack_b, t_stack **stack_a, bool print)
 {
     ft_push(stack_b, stack_a);
-    if (!checker)
+    if (print)
         ft_putstr_fd("pb\n", 1);    
 }
 
@@ -36,7 +36,7 @@ vacio o con algun nodo existente.
 * @param stack_src: puntero a stack origen.
 * @returns void.
 */
-/* static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
+static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 {
 	t_stack *node_to_push;
 	t_stack	*new_first_node;
@@ -79,55 +79,7 @@ vacio o con algun nodo existente.
 	// stack dest -> apuntar ptr stack dest a nuevo 1º nodo
 	*stack_dest = node_to_push;
 	//printf("*stack_dest-> %p \n", *stack_dest);	
-} */
-
-static void	ft_push(t_stack **dest, t_stack **src)
-{
-	t_stack	*node_to_push;
-
-	if (NULL == *src)
-		return ;
-	node_to_push = *src;
-	*src = (*src)->next;
-	if (*src)
-		(*src)->prev = NULL;
-	node_to_push->prev = NULL;
-	if (NULL == *dest)
-	{
-		*dest = node_to_push;
-		node_to_push->next = NULL;
-	}
-	else
-	{
-		node_to_push->next = *dest;
-		node_to_push->next->prev = node_to_push;
-		*dest = node_to_push;
-	}
 }
-
-/* static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
-{
-	t_stack	*node_to_push;
-
-	if (NULL == *stack_src)
-		return ;
-	node_to_push = *stack_src;
-	*stack_src = (*stack_src)->next;
-	if (*stack_src)
-		(*stack_src)->prev = NULL;
-	node_to_push->prev = NULL;
-	if (NULL == *stack_dest)
-	{
-		*stack_dest = node_to_push;
-		node_to_push->next = NULL;
-	}
-	else
-	{
-		node_to_push->next = *stack_dest;
-		node_to_push->next->prev = node_to_push;
-		*stack_dest = node_to_push;
-	}
-} */
 
 /* int	main(void)
 {
@@ -164,7 +116,6 @@ static void	ft_push(t_stack **dest, t_stack **src)
 		printf( "stack B -> numero-> %d, \t ptr previous -> %p \t address node -> %p \t ptr next -> %p \n", stack_b->value, stack_b->prev, stack_b, stack_b->next );
 		stack_b = stack_b->next;
 	}
-
 	printf("\nstack_init() -> return puntero stack a (*stack_a) -> %p \n", stack_a);
 	printf("stack_init() -> return puntero stack b (*stack_b) -> %p \n", stack_b);
 	return (0);

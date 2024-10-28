@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:48 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 19:02:49 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:31:05 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,62 +137,112 @@ int	ft_stack_len(t_stack *stack);
 /** 
 * @brief push to stack a: Toma el primer elemento del stack b y lo pone 
 el primero en el stack a. No hace nada si b está vacío.
-* @param stack_a: puntero a stack destino.
-* @param stack_b: puntero a stack origen.
+* @param stack_a t_stack **: rección de un puntero al primer nodo del stack a.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param print bool: imprimir operacion si print = true.
 * @returns void.
 */
-void    pa(t_stack **stack_a, t_stack **stack_b, bool checker);
+void    pa(t_stack **stack_a, t_stack **stack_b, bool print);
 
 /** 
 * @brief push to stack b: Toma el primer elemento del stack a y lo pone
 el primero en el stack b. No hace nada si a está vacío.
-* @param stack_b: puntero a stack destino.
-* @param stack_a: puntero a stack origen.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param stack_a t_stack **: rección de un puntero al primer nodo del stack a.
+* @param print bool: imprimir operacion si print = true.
 ** @returns void.
 */
-void    pb(t_stack **stack_b, t_stack **stack_a, bool checker);
+void    pb(t_stack **stack_b, t_stack **stack_a, bool print);
 
 // ARCHIVO 'command_rotate.c' --------------------------
 
 /** 
 * @brief Empujar el 1º nodo superior en la parte inferior del stack a.
 Atención si la pila vacía (NULL) o tamaño nodos igual a 1.
-* @param stack : dirección de un puntero al primer nodo del stack a.
-* @param checker : bool -> imprimir operacion si checker = 0.
+* @param stack t_stack **: dirección de un puntero al primer nodo del stack a.
+* @param print bool: imprimir operacion si print = true.
 * @returns void. Retorna 0 si tamaño stack menor de 2.
 */
-void    ra(t_stack **stack_a, bool checker);
+void    ra(t_stack **stack_a, bool print);
 
 /** 
 * @brief Empujar el 1º nodo superior en la parte inferior del stack b.
 Atención si la pila vacía (NULL) o tamaño nodos igual a 1.
-* @param stack : dirección de un puntero al primer nodo del stack b.
-* @param checker : bool -> imprimir operacion si checker = 0.
+* @param stack t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param print bool: imprimir operacion si print = true.
 * @returns void. Retorna 0 si tamaño stack menor de 2.
 */
-void    rb(t_stack **stack_b, bool checker);
+void    rb(t_stack **stack_b, bool print);
 
 /** 
 * @brief Empujar el 1º nodo superior en la parte inferior del stack a y stack b.
 Atención si la pila vacía (NULL) o tamaño nodos igual a 1.
-* @param stack_a : dirección de un puntero al primer nodo del stack a.
-* @param stack_b : dirección de un puntero al primer nodo del stack b.
-* @param checker : bool -> imprimir operacion si checker = 0.
+* @param stack_a t_stack **: dirección de un puntero al primer nodo del stack a.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param print bool: imprimir operacion si print = true.
 * @returns void. Retorna 0 si tamaño stack menor de 2.
 */
-void    rr(t_stack **stack_a, t_stack **stack_b, bool checker);
+void    rr(t_stack **stack_a, t_stack **stack_b, bool print);
 
 // ARCHIVO 'command_reverse_rotate.c' --------------------------
 
-void    rra(t_stack **stack_a, bool checker);
-void    rrb(t_stack **stack_b, bool checker);
-void    rrr(t_stack **stack_a, t_stack **stack_b, bool checker);
+/** 
+* @brief Empujar el ultimo nodo a la parte superior del stack a.
+Atención si la pila vacía (NULL) o tamaño nodos igual a 1.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param print bool: imprimir operacion si print = true.
+* @returns void. Retorna 0 si tamaño stack menor de 2.
+*/
+void    rra(t_stack **stack_a, bool print);
+
+/** 
+* @brief Empujar el ultimo nodo a la parte superior del stack b.
+Atención si la pila vacía (NULL) o tamaño nodos igual a 1.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param print bool: imprimir operacion si print = true.
+* @returns void. Retorna 0 si tamaño stack menor de 2.
+*/
+void    rrb(t_stack **stack_b, bool print);
+
+/** 
+* @brief Empujar el ultimo nodo a la parte superior del stack a y stack b.
+Atención si la pila vacía (NULL) o tamaño nodos igual a 1.
+* @param stack_a t_stack **: dirección de un puntero al primer nodo del stack a.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param print bool: imprimir operacion si print = true.
+* @returns void. Retorna 0 si tamaño stack menor de 2.
+*/
+void    rrr(t_stack **stack_a, t_stack **stack_b, bool print);
 
 // ARCHIVO 'command_swap.c' --------------------------
 
-void    sa(t_stack **stack_a, bool checker);
-void    sb(t_stack **stack_b, bool checker);
-void    ss(t_stack **stack_a, t_stack **stack_b, bool checker);
+/** 
+* @brief Intercambia el 1º nodo de posición con el 2º nodo del stack a.
+Atención si la pila src está vacía (NULL). Planteamiento con stack dest 
+vacio o con algun nodo existente.
+* @param stack_a t_stack **: dirección de un puntero al primer nodo del stack a.
+* @param print bool: imprimir operacion si print = true.
+*/
+void    sa(t_stack **stack_a, bool print);
+
+/** 
+* @brief Intercambia el 1º nodo de posición con el 2º nodo del stack b.
+Atención si la pila src está vacía (NULL). Planteamiento con stack dest 
+vacio o con algun nodo existente.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param print bool: imprimir operacion si print = true.
+*/
+void    sb(t_stack **stack_b, bool print);
+
+/** 
+* @brief Intercambia el 1º nodo de posición con el 2º nodo del stack a y b.
+Atención si la pila src está vacía (NULL). Planteamiento con stack dest 
+vacio o con algun nodo existente.
+* @param stack_a t_stack **: dirección de un puntero al primer nodo del stack a.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
+* @param print bool: imprimir operacion si print = true.
+*/
+void    ss(t_stack **stack_a, t_stack **stack_b, bool print);
 
 // FUNCIONES ALGORITMO ORDENACION  ---------------------
 // ---------------------------------------------------------------
@@ -201,8 +251,8 @@ void    ss(t_stack **stack_a, t_stack **stack_b, bool checker);
 
 /** 
  * @brief Ordena stack con 5 nodos. 
-* @param stack_a t_stack **: puntero a lista de nodos stack a.
-* @param stack_b t_stack **: puntero a lista de nodos stack b.
+* @param stack_a t_stack **: dirección de un puntero al primer nodo del stack a.
+* @param stack_b t_stack **: dirección de un puntero al primer nodo del stack b.
 * @returns void.
 */
 void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b);

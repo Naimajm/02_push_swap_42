@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:03:11 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 12:50:44 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 19:27:03 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,37 +14,35 @@
 
 static void ft_rotate(t_stack **stack);
 
-void    ra(t_stack **stack_a, bool checker)
+void    ra(t_stack **stack_a, bool print)
 {
     ft_rotate(stack_a);
-    if (!checker)
+    if (print)
         ft_putstr_fd("ra\n", 1);
 }
 
-void    rb(t_stack **stack_b, bool checker)
+void    rb(t_stack **stack_b, bool print)
 {
     ft_rotate(stack_b);
-    if (!checker)
+    if (print)
         ft_putstr_fd("rb\n", 1);
 }
 
-
-
-void    rr(t_stack **stack_a, t_stack **stack_b, bool checker)
+void    rr(t_stack **stack_a, t_stack **stack_b, bool print)
 {
     ft_rotate(stack_a);
     ft_rotate(stack_b);
-    if (!checker)
+    if (print)
         ft_putstr_fd("rr\n", 1);
 }
 
 /** 
-* @brief Empujar el nodo superior en la parte inferior del stack.
+* @brief Empujar el nodo superior a la parte inferior del stack.
 Atención si la pila src está vacía (NULL).
-* @param stack : stack.
+* @param stack t_stack **: dirección de un puntero al primer nodo del stack.
 * @returns void.
 */
-/* static void ft_rotate(t_stack **stack)
+static void ft_rotate(t_stack **stack)
 {
     t_stack *node_to_rotate; // 1º nodo a mover
     t_stack *last_node;    
@@ -53,10 +51,8 @@ Atención si la pila src está vacía (NULL).
     // VALIDACION INICIAL (no stack o no puntero stack)
     if (stack == NULL || *stack == NULL)
         return ;
-
-    stack_len = ft_stack_len(*stack);
-    // VERIFICACION  TAMAÑO STACK MAYOR Q 1
-    if (stack_len < 2)
+    stack_len = ft_stack_len(*stack);    
+    if (stack_len < 2) // VERIFICACION  TAMAÑO STACK MAYOR Q 1
         return ;
 
     node_to_rotate = *stack; 
@@ -75,23 +71,8 @@ Atención si la pila src está vacía (NULL).
     node_to_rotate->next = NULL; // conexion nuevo ultimo nodo a nulo
     //printf("antiguo ultimo nodo-> \t prev -> %p \t address -> %p \t next -> %p \n", last_node->prev, last_node, last_node->next);
     //printf("nuevo ultimo nodo-> \t prev -> %p \t address -> %p \t next -> %p \n", node_to_rotate->prev, node_to_rotate, node_to_rotate->next);
-} */
-
-static void	ft_rotate(t_stack **stack)
-{
-	t_stack	*last_node;
-	int				len;
-
-	len = ft_stack_len(*stack);
-	if (NULL == stack || NULL == *stack || 1 == len)
-		return ;
-	last_node = ft_find_last_node(*stack);
-	last_node->next = *stack;
-	*stack = (*stack)->next;
-	(*stack)->prev = NULL;
-	last_node->next->prev = last_node;
-	last_node->next->next = NULL;
 }
+
 /* 
 int main(void)
 {

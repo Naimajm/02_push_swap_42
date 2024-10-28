@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:26:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 12:44:09 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:40:17 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static	void	reverse_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *c
 		while (stack_len_a > 3)
 		{
 			stack_len_a--;
-			pb(stack_b, stack_a, false);			
+			pb(stack_b, stack_a, true);			
 		}
 	}
 
@@ -56,10 +56,10 @@ static	void	reverse_rotate_both(t_stack **stack_a, t_stack **stack_b, t_stack *c
 	smallest_node = find_smallest_node(*stack_a);
 	if (smallest_node->above_median == true)
 		while (*stack_a != smallest_node)
-			ra(stack_a, false);
+			ra(stack_a, true);
 	else
 		while (*stack_a != smallest_node)
-			rra(stack_a, false);
+			rra(stack_a, true);
 } */
 
 void	push_swap(t_stack **a, t_stack **b)
@@ -81,7 +81,7 @@ void	push_swap(t_stack **a, t_stack **b)
 	{
 		//printf("push_swap() pb() \n");
 		while (len_a-- > 3)
-			pb(b, a, false);
+			pb(b, a, true);
 	}
 	//printf("push_swap() tiny_sort_three() \n");
 	// IMPRESION STACK A	
@@ -118,10 +118,10 @@ void	push_swap(t_stack **a, t_stack **b)
 	smallest = find_smallest_node(*a);
 	if (smallest->above_median)
 		while (*a != smallest)
-			ra(a, false);
+			ra(a, true);
 	else
 		while (*a != smallest)
-			rra(a, false);
+			rra(a, true);
 }
 
 
@@ -151,7 +151,7 @@ void	push_swap(t_stack **a, t_stack **b)
 	finish_rotation(stack_b, cheapest_node, 'b');
 	finish_rotation(stack_a, target_node, 'a');
 	// PUSH DEL cheapest_node DEL STACK B AL STACK A
-	pa(stack_a, stack_b, false);	
+	pa(stack_a, stack_b, true);	
 } */
 
 static void	move_nodes(t_stack **a, t_stack **b)
@@ -169,7 +169,7 @@ static void	move_nodes(t_stack **a, t_stack **b)
 		reverse_rotate_both(a, b, cheapest_node);
 	finish_rotation(b, cheapest_node, 'b');
 	finish_rotation(a, cheapest_node->target_node, 'a');
-	pa(a, b, false);
+	pa(a, b, true);
 }
 
 
@@ -181,16 +181,16 @@ static void	move_nodes(t_stack **a, t_stack **b)
 		if (stack_name == 'a')
 		{
 			if (top_node->above_median == true)
-				ra(stack, false);
+				ra(stack, true);
 			else
-				rra(stack, false);			
+				rra(stack, true);			
 		}
 		else if (stack_name == 'b')
 		{
 			if (top_node->above_median == true)
-				rb(stack, false);
+				rb(stack, true);
 			else
-				rrb(stack, false);
+				rrb(stack, true);
 		}
 	}
 } */
@@ -204,16 +204,16 @@ void	finish_rotation(t_stack **stack,
 		if (stack_name == 'a')
 		{
 			if (top_node->above_median)
-				ra(stack, false);
+				ra(stack, true);
 			else
-				rra(stack, false);
+				rra(stack, true);
 		}
 		else if (stack_name == 'b')
 		{
 			if (top_node->above_median)
-				rb(stack, false);
+				rb(stack, true);
 			else
-				rrb(stack, false);
+				rrb(stack, true);
 		}	
 	}
 }
@@ -230,7 +230,7 @@ void	finish_rotation(t_stack **stack,
 
 	// ROTAR ELEMENTOS HASTA Q CHEAPEST Y TARGET NODE ESTEN ARRIBA en los stack (ptr *stack)
 	while ((*stack_a != target_node) && (*stack_b != cheapest_node))
-		rr(stack_a, stack_b, false);
+		rr(stack_a, stack_b, true);
 	// ACTUALIZAR POSICIONES DESPUES DE ROTACION
 	set_current_position(*stack_a);
 	set_current_position(*stack_b);	
@@ -242,7 +242,7 @@ static void	rotate_both(t_stack **a,
 {
 	while (*a != cheapest_node->target_node
 		&& *b != cheapest_node)
-		rr(a, b, false);
+		rr(a, b, true);
 	set_current_position(*a);
 	set_current_position(*b);
 }
@@ -259,7 +259,7 @@ static void	rotate_both(t_stack **a,
 
 	// ROTAR ELEMENTOS HASTA Q CHEAPEST Y TARGET NODE ESTEN ARRIBA en los stack (ptr *stack)
 	while (*stack_a != target_node && *stack_b != cheapest_node)
-		rrr(stack_a, stack_b, false);
+		rrr(stack_a, stack_b, true);
 	// ACTUALIZAR POSICIONES DESPUES DE ROTACION
 	set_current_position(*stack_a);
 	set_current_position(*stack_b);	
@@ -271,7 +271,7 @@ static void	reverse_rotate_both(t_stack **a,
 {
 	while (*a != cheapest_node->target_node
 		&& *b != cheapest_node)
-		rrr(a, b, false);
+		rrr(a, b, true);
 	set_current_position(*a);
 	set_current_position(*b);
 }
