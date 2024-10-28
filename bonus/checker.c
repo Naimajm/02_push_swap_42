@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:23:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/26 20:58:54 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 14:27:54 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,25 @@
 static void	check_command(t_stack **stack_a, t_stack **stack_b, char *command)
 {
 	if (ft_strncmp(command, "pa\n", 3) == 0)
-		pa(stack_a, stack_b, true);
+		pa(stack_a, stack_b, false);
 	else if (ft_strncmp(command, "pb\n", 3) == 0)
-		pb(stack_b, stack_a, true);
+		pb(stack_b, stack_a, false);
 	else if (ft_strncmp(command, "ra\n", ft_strlen("ra\n")) == 0)
-		ra(stack_a, true);		
+		ra(stack_a, false);		
 	else if (ft_strncmp(command, "rb\n", ft_strlen("rb\n")) == 0)
-		rb(stack_b, true);
+		rb(stack_b, false);
 	else if (ft_strncmp(command, "rr\n", ft_strlen("rr\n")) == 0)
-		rr(stack_a, stack_b, true);
+		rr(stack_a, stack_b, false);
 	else if (ft_strncmp(command, "rra\n", ft_strlen("rra\n")) == 0)
-		rra(stack_a, true);
+		rra(stack_a, false);
 	else if (ft_strncmp(command, "rrb\n", ft_strlen("rrb\n")) == 0)
-		rrb(stack_b, true);
+		rrb(stack_b, false);
 	else if (ft_strncmp(command, "rrr\n", ft_strlen("rrr\n")) == 0)
-		rrr(stack_a, stack_b, true);
+		rrr(stack_a, stack_b, false);
 	else if (ft_strncmp(command, "sa\n", ft_strlen("sa\n")) == 0)
-		sa(stack_a, true);
+		sa(stack_a, false);
 	else if (ft_strncmp(command, "sb\n", ft_strlen("sb\n")) == 0)
-		sb(stack_b, true);
+		sb(stack_b, false);
 	else
 	{
 		ft_free_stack(stack_a);
