@@ -9,7 +9,7 @@ BOLD                = \033[1m
 DEF_COLOR           = \033[0;39m
 GRAY                = \033[0;90m
 RED                 = \033[0;91m
-GREEN               = \033[0;92m
+GREEN               = \033[0;92m  
 YELLOW              = \033[0;93m
 BLUE                = \033[0;94m
 MAGENTA             = \033[0;95m
@@ -27,67 +27,73 @@ DARK_YELLOW         = \033[38;5;143m
 # ---------------------------------------------------
 
 # NOMBRE SALIDA ARCHIVO COMPILADO
-NAME = push_swap.a
+LIBRARY := push_swap.a
+NAME := push_swap
 
-# nombre compilador
-CC := cc
-
-# flags de compilacion
-CFLAGS := -Wall -Wextra -Werror
-
-# COMPRESION A 1 ARCHIVO
-MAKE_LIBRARY = ar -rcs
+CC := cc # nombre compilador
+CFLAGS := -Wall -Wextra -Werror # flags de compilacion
+MAKE_LIBRARY := ar -rcs # COMPRESION A 1 ARCHIVO -> LIBRERIAS .a
+#$(MAKE_LIBRARY) $(NAME) $(OBJ_FILES) 
 
 # DIRECTORIOS -----------------------------------------
 # ---------------------------------------------------
-
 LIBFT_DIR := ../libft
 
 # ARCHIVOS LIBRERIAS -----------------------------------------
 # ---------------------------------------------------
-
-LIBFT_ARCHIVE := ${LIBFT_DIR}/libft.a
+LIBFT_ARCHIVE := libft.a
 
 # RECURSOS -----------------------------------------
 # ---------------------------------------------------
 # LISTADO FUNCIONES A INCLUIR EN BIBLIOTECA
-
 SRC := split.c stack_init.c stack_utils.c \
 free.c sort.c \
 command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
 push_swap_init.c push_swap_command.c \
+main.c \
 
-# LISTA ARCHIVOS .O SEGUN ARCHIVO C
-OBJ_FILES := $(SRC:%.c=%.o)
+OBJ_FILES := $(SRC:%.c=%.o) # LISTA ARCHIVOS .O SEGUN ARCHIVO C
 
 # RECETAS -----------------------------------------
 # ---------------------------------------------------.
+ 
+all: $(NAME) # receta predeterminada
 
-# receta predeterminada
-all: $(NAME)
+# $< is used to get the first dependency.
+# $@ is used to get the target.
+# -c flag is used to compile the source files.
 
-# FUNCION PPAL -> CREACION ARCHIVO LIBRERIA ESTATICA .a
-$(NAME): ftlibft $(OBJ_FILES)
+# FUNCION PPAL -> CREACION ARCHIVO COMPILADO
+$(NAME): $(OBJ_FILES) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
 	@echo "$(ORANGE)📌​ Compiling $(NAME)... $(DEF_COLOR)"
-	$(MAKE_LIBRARY) $(NAME) $(OBJ_FILES) 
-	@echo "$(DARK_GREEN) $(NAME) all created ✓$(DEF_COLOR)"
+	$(CC) ${CFLAGS} $^ -o $(NAME)
+##$(MAKE_LIBRARY) $(NAME) $(OBJ_FILES) 
+	@echo "$(DARK_GREEN)$(NAME) has been created ✓$(DEF_COLOR)"
 
-# COMPILACION LIBRERIA LIBFT
-ftlibft:
-	@cd ${LIBFT_DIR} && $(MAKE) all > /dev/null 2>&1
+# FUNCION LIBRERIA LIBFT -> CREACION ARCHIVO LIBRERIA
+$(LIBFT_ARCHIVE) :
+	@echo "$(ORANGE)📌​ Compiling $(LIBFT_ARCHIVE) library... $(DEF_COLOR)"
+	cd ${LIBFT_DIR} && make
+	@echo "$(DARK_GREEN) $(LIBFT_ARCHIVE) library created ✓ $(DEF_COLOR)"
 
 # RECETA BORRAR ARCHIVOS
 clean:
+	@echo "${ORANGE}🗑️​ Removing object files...${NAME}...${DEF_COLOR}"
 	rm -f $(OBJ_FILES)
+	@echo "${DARK_GREEN}Cleaning objects ${NAME}...is done! ${DEF_COLOR}"
 
-# ejecuta clean + borrado archivo '.a'
-fclean: clean
+
+fclean: clean # ejecuta clean + borrado archivo '.a'
+	@echo "${ORANGE}🗑️ Removing files...${NAME}... ${DEF_COLOR}"
 	rm -f $(NAME)
+	@echo "${DARK_GREEN}Cleaning ${NAME} is done! ${DEF_COLOR}"
 
-# FUNCION RECONSTRUCCION 
-# -> ELIMINACION ARCHIVOS '.o' + archivos biblioteca '.a'
+# RECOMPILACION -----------------------------------------
+# ---------------------------------------------------
+# FUNCION RECONSTRUCCION -> ELIMINACION ARCHIVOS '.o' + archivos biblioteca '.a'
 # NUEVA COMPILACION CON RECETA $(NAME)
 re: fclean all
+	@echo "${DARK_GREEN}🗑️ Cleaning ${NAME} is done and 📌 $(NAME) has been created✓! ${DEF_COLOR}"
 
 .PHONY: all clean fclean re
 
