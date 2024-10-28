@@ -6,19 +6,19 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 22:00:10 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/04 09:34:02 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:55:39 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ft_strlcpy(char *dest, const char *src, unsigned int destsize)
+int	ft_strlcpy_next_line(char *dest, const char *src, unsigned int destsize)
 {
 	int	index;
 	int	src_len;
 
 	index = 0;
-	src_len = ft_strlen(src);
+	src_len = ft_strlen_next_line(src);
 	if (destsize != 0)
 	{
 		while (src[index] != 0 && index - (destsize - 1))
@@ -58,7 +58,7 @@ char	*ft_strjoin(char const *str1, char const *str2)
 	str1_index = 0;
 	str2_index = 0;
 	str_joined_index = 0;
-	str = malloc((ft_strlen(str1) + ft_strlen(str2) + 1) * sizeof(char));
+	str = malloc((ft_strlen_next_line(str1) + ft_strlen_next_line(str2) + 1) * sizeof(char));
 	if (!str || (!str1 && !str2))
 		return (NULL);
 	while (str1[str1_index] != '\0')
@@ -77,7 +77,7 @@ char	*ft_strjoin(char const *str1, char const *str2)
 	return (str);
 }
 
-int	ft_strlen(const char	*str)
+int	ft_strlen_next_line(const char	*str)
 {
 	int	count;
 

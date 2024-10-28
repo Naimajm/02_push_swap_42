@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 21:59:55 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/04 14:04:28 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:55:39 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static char	*get_final_part_line(char *total_line)
 		free(total_line);
 		return (NULL);
 	}
-	final_line = ft_calloc(ft_strlen(total_line) - i_buffer + 1, sizeof(char));
+	final_line = ft_calloc(ft_strlen_next_line(total_line) - i_buffer + 1, sizeof(char));
 	if (!final_line)
 		return (NULL);
 	while (total_line[i_buffer] != '\0')
@@ -54,7 +54,7 @@ static char	*get_cleaned_line(char *buffer)
 	new_line = ft_calloc(index + 1 + 1, sizeof(char));
 	if (!new_line)
 		return (NULL);
-	ft_strlcpy(new_line, buffer, index + 1 + 1);
+	ft_strlcpy_next_line(new_line, buffer, index + 1 + 1);
 	return (new_line);
 }
 

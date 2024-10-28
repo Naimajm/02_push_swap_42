@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 20:19:01 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/04 14:04:20 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:55:39 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,10 @@
 # include <unistd.h>
 
 char	*get_next_line(int fd);
-int		ft_strlcpy(char *dest, const char *src, unsigned int destsize);
+int		ft_strlcpy_next_line(char *dest, const char *src, unsigned int destsize);
 void	*ft_calloc(size_t count, size_t size);
 char	*ft_strjoin(char const *str1, char const *str2);
-int		ft_strlen(const char *str);
+int		ft_strlen_next_line(const char *str);
 char	*ft_strchr(const char *str, int character);
 
 #endif
