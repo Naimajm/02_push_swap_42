@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:34:41 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/25 13:48:12 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/26 20:52:45 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 
 #include "../get_next_line/get_next_line.h"
 
-# define BUFFER_SIZE 10
+//# define BUFFER_SIZE 10
 
-char	*get_next_line_check(int fd);
+//char	*get_next_line_check(int fd);
 
 
 #endif
