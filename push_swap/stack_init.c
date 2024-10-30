@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:15:28 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 12:05:35 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/28 20:49:48 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static long	ft_atol(const char *str);
 
 void	stack_init(t_stack **stack, char **argv)
 {
-	long number;
+	long number; 
 	int	index;
 
 	index = 0;

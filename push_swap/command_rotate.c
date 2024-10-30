@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:03:11 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 19:27:03 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/29 13:58:15 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int main(void)
 
     char    *arg_num_stack_a[4] = { arg_num_stack_a[0] = "4", arg_num_stack_a[1] = "3", arg_num_stack_a[2] = "2", arg_num_stack_a[3] = "1" };
 
-    stack_init(&stack_a, arg_num_stack_a, false);
+    stack_init(&stack_a, arg_num_stack_a);
     initial_stack = stack_a;
 
     // ESTADO INICIAL STACKS

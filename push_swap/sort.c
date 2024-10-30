@@ -6,22 +6,34 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 12:28:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 14:30:18 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/30 22:37:07 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static t_stack	*find_highest_node(t_stack *stack);
-
-void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
+/* void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
 {
 	while (ft_stack_len(*stack_a) > 3)
 	{
 		init_nodes(*stack_a, *stack_b);			
 		finish_rotation(stack_a, find_smallest_node(*stack_a), 'a');
-		pb(stack_b, stack_a, true);	// push to stack b	
+		pb(stack_b, stack_a, true);	// push to stack b			
 	}
+	if (!stack_is_sorted(*stack_b)) 
+		sb(stack_b, true);	// ordenar stack b 2 elementos
+} */
+
+void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b)
+{
+	while (ft_stack_len(*stack_a) > 3)
+	{
+		//init_nodes(*stack_a, *stack_b);			
+		//finish_rotation(stack_a, find_smallest_node(*stack_a), 'a');
+		pb(stack_b, stack_a, true);	// push to stack b			
+	}
+	if (!stack_is_sorted(*stack_b)) 
+		sb(stack_b, true);	// ordenar stack b 2 elementos
 }
 
 void	tiny_sort_three(t_stack **stack)
@@ -33,19 +45,13 @@ void	tiny_sort_three(t_stack **stack)
 	if (*stack == highest_node)  // 1º nodo numero + alto
 		ra(stack, true);
 	else if ((*stack)->next == highest_node) // 2º nodo numero + alto
-		rra(stack, true);
-		
+		rra(stack, true);		
 	// ORDENAR 2 ELEMENTOS (una vez el valor mayor se coloca abajo)
 	if ((*stack)->value > (*stack)->next->value)
 		sa(stack, true);    
 }
 
-/** 
-* @brief Encuentra el nodo con atributo 'value' mas grande.
-* @param stack t_stack *: puntero al primer nodo del stack.
-* @returns t_stack * -> puntero a nodo encontrado .
-*/
-static t_stack	*find_highest_node(t_stack *stack)
+t_stack	*find_highest_node(t_stack *stack)
 {
 	int	highest_number;
 	t_stack	*highest_node;

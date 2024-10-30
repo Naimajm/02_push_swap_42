@@ -47,7 +47,7 @@ LIBFT_ARCHIVE := libft.a
 # ---------------------------------------------------
 # LISTADO FUNCIONES A INCLUIR EN BIBLIOTECA
 SRC := split.c stack_init.c stack_utils.c \
-free.c sort.c \
+free.c sort.c sorting.c utils.c \
 command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
 push_swap_init.c push_swap_command.c \
 main.c \
@@ -98,7 +98,7 @@ fclean: clean # ejecuta clean + borrado archivo '.a'
 # FUNCION RECONSTRUCCION -> ELIMINACION ARCHIVOS '.o' + archivos biblioteca '.a'
 # NUEVA COMPILACION CON RECETA $(NAME)
 re: fclean all
-	@echo "${DARK_GREEN}🗑️ Cleaning ${NAME} is done and 📌 $(NAME) has been created✓! ${DEF_COLOR}"
+	@echo "${DARK_GREEN}🗑️ Cleaning $(NAME) is done and 📌 $(NAME) has been created✓! ${DEF_COLOR}"
 
 .PHONY: all clean fclean re
 

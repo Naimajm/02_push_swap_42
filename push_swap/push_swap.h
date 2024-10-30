@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:48 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 19:31:05 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/30 17:42:33 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,27 @@
 #include "../libft/libft.h"
 
 // ESTRUCTURA DATOS -> LISTA VINCULADA -> STACKS / PILAS
+/* La estructura `s_stack` es una representación rica en información de un
+nodo en una pila doblemente enlazada, diseñada para soportar algoritmos de 
+ordenación complejos. Contiene campos para valores, índices, costos, posiciones, 
+punteros a nodos adyacentes y objetivos, así como marcadores booleanos para facilitar la implementación de estrategias de ordenación eficientes. */
 typedef struct s_stack
 {
-	int	value;
-	int	current_position;
-	int	push_price;
-	bool	above_median;
-	bool	cheapest_cost;
+	int	value; //  valor del nodo en la pila
+	int	current_position; // pos -> posición actual del nodo en la pila
+	int index; // index índice del nodo (valor en una lista si todos los numeros estuvieran ordenados)
 
-	struct	s_stack	*target_node;
+
+	int	cost;  // cost  costo asociado con mover este nodo a su posición correcta en la pila ordenada. Este costo puede ser calculado en función de las operaciones necesarias para mover el nodo
+
+	int	target_position; // posición nodo objetivo del nodo en la pila ordenada
+	
+	int	a_cost; // costo de mover el nodo en stack a
+	int	b_cost; // costo de mover el nodo en stack b
+	bool	above_median;  // above -> indicar si el nodo está por encima de otro nodo en algún contexto específico del algoritmo
+	bool	cheapest_cost; // best option mejor candidato para alguna operación específica en el algoritmo
+
+	struct	s_stack	*target_node; // puntero a nodo objetivo en la pila ordenada
 	struct	s_stack	*prev;
 	struct	s_stack	*next;	
 }					t_stack;
@@ -247,6 +259,7 @@ void    ss(t_stack **stack_a, t_stack **stack_b, bool print);
 // FUNCIONES ALGORITMO ORDENACION  ---------------------
 // ---------------------------------------------------------------
 
+
 // ARCHIVO 'sort.c' --------------------------
 
 /** 
@@ -266,6 +279,13 @@ void	tiny_sort_five(t_stack **stack_a, t_stack **stack_b);
 * @returns void.
 */
 void tiny_sort_three(t_stack **stack);
+
+/** 
+* @brief Encuentra el nodo con atributo 'value' mas grande.
+* @param stack t_stack *: puntero al primer nodo del stack.
+* @returns t_stack * -> puntero a nodo encontrado .
+*/
+t_stack	*find_highest_node(t_stack *stack);
 
 // ARCHIVO 'push_swap_init.c' --------------------------
 
@@ -309,5 +329,16 @@ void	push_swap(t_stack **stack_a, t_stack **stack_b);
  * Concluir la rotación de las pilas. Rotar de forma individual cada stack hasta posicionar al 1º nodo
 */
 void	finish_rotation(t_stack **stack, t_stack *top_node, char stack_name);
+
+// ARCHIVO 'sorting.c' --------------------------
+
+void	sorting(t_stack **stack_a, t_stack **stack_b);
+void ft_get_index(t_stack *stack);
+
+//void	ft_get_index(t_stack *stack_a, int stack_len_max);
+
+// ARCHIVO 'utils.c' --------------------------
+
+
 
 #endif

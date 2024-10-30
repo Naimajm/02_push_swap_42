@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:53 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 14:28:43 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:50:51 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 		index++;
 	}	 */
 
-	// CREACION STACK		
+	// CREACION STACK + VALIDACION Y CONVERSION ARGUMENTOS	
 	stack_init(&stack_a, argv + 1);
 	
 	// IMPRESION STACK 'INICIAL'
@@ -43,39 +43,37 @@ int	main(int argc, char **argv)
 	stack_copy_a = stack_a;
 	while (stack_copy_a) 
 	{
-		printf( "main() stack a -> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_a->value, stack_copy_a->prev, stack_copy_a, stack_copy_a->next );
+		printf( "main() stack a INICIAL-> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_a->value, stack_copy_a->prev, stack_copy_a, stack_copy_a->next );
 		stack_copy_a = stack_copy_a->next;
 	} */
 
 	// ALGORTIMO ORDENACION -> ORDENAR PARA 2, 3 O RESTO ELEMENTOS (push_swap())
-	//printf("main() -> stack_is_sorted-> %d \n", stack_is_sorted(stack_a));
-	
+	//printf("main() -> stack_is_sorted-> %d \n", stack_is_sorted(stack_a));	
 	if (!stack_is_sorted(stack_a))
 	{
-		if (ft_stack_len(stack_a) == 2)
-		{
-			//printf("main() sa() -> \n");
-			sa(&stack_a, true);
-		}
-		else if (ft_stack_len(stack_a) == 3)
-		{
-			//printf("main() tiny_sort_three() -> \n");
-			tiny_sort_three(&stack_a);
-		}
-		else
-		{
-			//printf("main()  push_swap() -> \n");
-			push_swap(&stack_a, &stack_b);
-		}
+		//printf("main()  push_swap() -> \n");
+		push_swap(&stack_a, &stack_b); // ordenar stack a -> mayor 3 elementos
 	}
+
+	//set_current_position(stack_a);
+	//set_current_position(stack_b);
+
 	// IMPRESION STACK 'ORDENADO'
-	/* stack_copy_a = stack_a;
+	/* t_stack *stack_copy_a;
+	stack_copy_a = stack_a;
 	while (stack_copy_a) 
 	{
-		printf( "main() stack a -> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_a->value, stack_copy_a->prev, stack_copy_a, stack_copy_a->next );
+		printf( "main() stack a FINAL -> arg numero-> %d, index-> %d, \t current_position-> %d \t target_node-> %p \t above_median-> %d \n", stack_copy_a->value, stack_copy_a->index, stack_copy_a->current_position, stack_copy_a->target_node, stack_copy_a->above_median);
 		stack_copy_a = stack_copy_a->next;
-	} */
-
+	}
+	t_stack *stack_copy_b;
+	stack_copy_b = stack_b;
+	while (stack_copy_b) 
+	{
+		printf( "main() stack a FINAL -> arg numero-> %d, index-> %d, \t current_position-> %d \t target_node-> %p \t above_median-> %d \n", stack_copy_b->value, stack_copy_b->index, stack_copy_b->current_position, stack_copy_b->target_node, stack_copy_b->above_median);
+		stack_copy_b = stack_copy_b->next;
+	}
+ */
 	// LIBERAR MEMORIA STACK
 	ft_free_stack(&stack_a);
 	return (0);

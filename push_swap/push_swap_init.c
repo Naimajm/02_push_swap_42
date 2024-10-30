@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 14:06:25 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 19:44:33 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/30 18:50:43 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,9 @@ void	set_cheapest_node(t_stack *stack_b)
 	best_match_value = LONG_MAX;
 	while (stack_b != NULL)
 	{
-		if (stack_b->push_price < best_match_value)
+		if (stack_b->cost < best_match_value)
 		{
-			best_match_value = stack_b->push_price;
+			best_match_value = stack_b->cost;
 			best_match_node = stack_b;
 		}
 		stack_b = stack_b->next;
@@ -64,13 +64,13 @@ void	set_push_price(t_stack *stack_a, t_stack *stack_b)
 	stack_len_b = ft_stack_len(stack_b);
 	while (stack_b)
 	{
-		stack_b->push_price = stack_b->current_position;
+		stack_b->cost = stack_b->current_position;
 		if (!(stack_b->above_median))
-			stack_b->push_price = stack_len_b - (stack_b->current_position);
+			stack_b->cost = stack_len_b - (stack_b->current_position);
 		if (stack_b->target_node->above_median)
-			stack_b->push_price += stack_b->target_node->current_position;
+			stack_b->cost += stack_b->target_node->current_position;
 		else
-			stack_b->push_price += stack_len_a - (stack_b->target_node->current_position);
+			stack_b->cost += stack_len_a - (stack_b->target_node->current_position);
 		stack_b = stack_b->next;
 	}
 }
