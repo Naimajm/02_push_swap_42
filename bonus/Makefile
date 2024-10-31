@@ -98,6 +98,8 @@ clean:
 fclean: clean
 	@echo "${ORANGE}🗑️ Removing files...${NAME}... ${DEF_COLOR}"
 	rm -f $(NAME)
+#cd $(LIBFT_DIR) && rm -f $(NAME)
+#cd $(GET_NEXT_LINE_DIR) && rm -f $(NAME)
 	cd $(PUSH_SWAP_DIR) && rm -f $(NAME)
 	@echo "${DARK_GREEN}Cleaning ${NAME} is done! ${DEF_COLOR}"
 
@@ -106,6 +108,7 @@ fclean: clean
 # FUNCION RECONSTRUCCION -> ELIMINACION ARCHIVOS '.o' + archivos biblioteca '.a'
 # NUEVA COMPILACION CON RECETA $(NAME)
 re: fclean all
+	make clean
 	@echo "${DARK_GREEN}🗑️ Cleaning ${NAME} is done and 📌 $(NAME) has been created✓! ${DEF_COLOR}"
 
 .PHONY: all clean fclean re

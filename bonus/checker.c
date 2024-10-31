@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:23:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 14:27:54 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:55:11 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ static void	check_command(t_stack **stack_a, t_stack **stack_b, char *command)
 		sb(stack_b, false);
 	else
 	{
-		ft_free_stack(stack_a);
-		ft_free_stack(stack_b);
+		free_stack(stack_a);
+		free_stack(stack_b);
 		ft_putstr_fd("Error\n", 2);
 		exit(1);
 	}	
@@ -58,10 +58,10 @@ int	main(int argc, char **argv)
 	if (argc == 1)
 		return (0);
 	else if (argc == 2)
-		argv = split(argv[1],' ');
+		argv = split_push_swap(argv[1],' ');
 	
 	// CREACION STACK
-	stack_init(&stack_a, argv + 1);
+	init_stack(&stack_a, argv + 1);
 
 	// IMPRESION STACK 'INICIAL'
 	/* t_stack *stack_copy_a;
@@ -71,7 +71,7 @@ int	main(int argc, char **argv)
 		printf( "main() stack a -> arg numero-> %d, \t prev-> %p \t address-> %p \t next-> %p \n", stack_copy_a->value, stack_copy_a->prev, stack_copy_a, stack_copy_a->next );
 		stack_copy_a = stack_copy_a->next;
 	} */
-	stack_len = ft_stack_len(stack_a);
+	stack_len = get_stack_len(stack_a);
 	
 	next_line = get_next_line(STDIN_FILENO);
 
@@ -84,12 +84,12 @@ int	main(int argc, char **argv)
 		next_line = get_next_line(STDIN_FILENO);
 	}	
 	// VALIDACION ORDENAMIENTO STACK + IGUAL NUM ELEMENTOS en estados inicial y final
-	if ((stack_is_sorted(stack_a)) && (ft_stack_len(stack_a) == stack_len) && ft_stack_len(stack_a) > 0)
+	if ((is_stack_sorted(stack_a)) && (get_stack_len(stack_a) == stack_len) && get_stack_len(stack_a) > 0)
 		ft_putstr_fd("OK\n", 1);
 	else
 		ft_putstr_fd("KO\n", 1);	
 
 	// LIBERAR MEMORIA STACK
-	ft_free_stack(&stack_a);
+	free_stack(&stack_a);
 	return (0);
 }
