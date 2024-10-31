@@ -28,7 +28,7 @@ DARK_YELLOW         = \033[38;5;143m
 
 # NOMBRE SALIDA ARCHIVO COMPILADO
 LIBRARY := push_swap.a
-NAME := push_swap
+NAME := push_swap 
 
 CC := cc # nombre compilador
 CFLAGS := -Wall -Wextra -Werror # flags de compilacion
@@ -46,11 +46,10 @@ LIBFT_ARCHIVE := libft.a
 # RECURSOS -----------------------------------------
 # ---------------------------------------------------
 # LISTADO FUNCIONES A INCLUIR EN BIBLIOTECA
-SRC := split.c stack_init.c stack_utils.c \
-free.c sort.c sorting.c utils.c \
+SRC := init_split.c init_stack.c init_stack_utils.c \
 command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
-push_swap_init.c push_swap_command.c \
-main.c \
+sort.c sort_node_init.c sort_node_move.c \
+main_push_swap.c main.c \
 
 OBJ_FILES := $(SRC:%.c=%.o) # LISTA ARCHIVOS .O SEGUN ARCHIVO C
 
@@ -73,7 +72,9 @@ $(NAME): $(LIBRARY) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
 
 # FUNCION SECUNDARIA -> LIBRERIA 'push_swap.a' para exe 'push_swap' y 'checker' bonus
 $(LIBRARY) : $(OBJ_FILES) 
+	@echo "$(ORANGE)📌​ Compiling $(LIBRARY)... $(DEF_COLOR)"
 	$(MAKE_LIBRARY) $(LIBRARY) $^ 
+	@echo "$(DARK_GREEN) $(LIBRARY) library created ✓ $(DEF_COLOR)"
 
 # FUNCION LIBRERIA LIBFT -> CREACION ARCHIVO LIBRERIA
 $(LIBFT_ARCHIVE) :
@@ -89,16 +90,19 @@ clean:
 
 
 fclean: clean # ejecuta clean + borrado archivo '.a'
-	@echo "${ORANGE}🗑️ Removing files...${NAME}... ${DEF_COLOR}"
+	@echo "${ORANGE}🗑️ Removing files...${NAME} and $(LIBRARY)... ${DEF_COLOR}"
 	rm -f $(NAME)
+	rm -f $(LIBRARY)
 	@echo "${DARK_GREEN}Cleaning ${NAME} is done! ${DEF_COLOR}"
 
 # RECOMPILACION -----------------------------------------
 # ---------------------------------------------------
 # FUNCION RECONSTRUCCION -> ELIMINACION ARCHIVOS '.o' + archivos biblioteca '.a'
 # NUEVA COMPILACION CON RECETA $(NAME)
-re: fclean all
+re: fclean all 
+	make clean
 	@echo "${DARK_GREEN}🗑️ Cleaning $(NAME) is done and 📌 $(NAME) has been created✓! ${DEF_COLOR}"
+	
 
 .PHONY: all clean fclean re
 

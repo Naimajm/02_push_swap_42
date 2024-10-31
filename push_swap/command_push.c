@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 20:43:29 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 19:15:36 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 09:43:33 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,7 @@ static  void ft_push(t_stack **stack_dest, t_stack **stack_src)
 	t_stack *node_to_push;
 	t_stack	*new_first_node;
 
-	// VALIDACION INICIAL (stack src podria ser nulo)
-	if ( *stack_src == NULL )
+	if ( *stack_src == NULL ) // VALIDACION INICIAL ARGUMENTOS
 		return ;
 
 	// stack src -> nodo temporal apunta al 1º nodo stack origen que

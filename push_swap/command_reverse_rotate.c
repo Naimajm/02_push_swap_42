@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 22:05:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 19:17:29 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:37:00 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,21 +35,25 @@ void    rrr(t_stack **stack_a, t_stack **stack_b, bool print)
     if (print)
         ft_putstr_fd("rrr\n", 1);
 }
-
+/** 
+* @brief Empujar el ultimo nodo inferior a la parte superior del stack.
+Atención si la pila src está vacía (NULL).
+* @param stack t_stack **: dirección de un puntero al primer nodo del stack.
+* @returns void.
+*/
 static void ft_reverse_rotate(t_stack **stack)
 {
     t_stack *last_node;
     int stack_len;
     
-    stack_len = ft_stack_len(*stack);
-
-    // VALIDACION INICIAL (stack o puntero stack nulo)
-    if (stack == NULL || *stack == NULL)
-        return ;
-    if (stack_len < 2) // numero nodos stack menor de 2
+    if (stack == NULL || *stack == NULL) // VALIDACION INICIAL ARGUMENTOS
         return ;
 
-    last_node = ft_find_last_node(*stack);
+    stack_len = get_stack_len(*stack);    
+    if (stack_len < 2)
+        return ;
+
+    last_node = find_last_node(*stack);
     //printf("last_node -> \t %p \n", last_node);
 
     last_node->prev->next = NULL; // desconectar -> conectar nuevo ultimo nodo a '\0'    

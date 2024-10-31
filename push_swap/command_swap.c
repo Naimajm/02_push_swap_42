@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 12:32:35 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 19:29:28 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:37:00 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,10 @@ static void ft_swap(t_stack **stack)
     t_stack *new_second_node;   
     int stack_len; 
     
-    stack_len = ft_stack_len(*stack);
-    // VALIDACION INICIAL (stack no inicializado o ptr sin direccion)
-    if (*stack == NULL || stack == NULL || stack_len < 2)
+    if (stack == NULL || *stack == NULL) // VALIDACION INICIAL ARGUMENTOS
+        return ;
+    stack_len = get_stack_len(*stack);    
+    if (stack_len < 2) // VERIFICACION  TAMAÑO STACK MAYOR Q 1
         return ;
     
     // COPIAR 1º NODO A NUEVO 2º NODO y 2º NODO COMO NUEVO 1º NODO

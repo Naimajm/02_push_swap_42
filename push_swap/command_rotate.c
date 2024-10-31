@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 20:03:11 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/29 13:58:15 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:37:00 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,17 +47,16 @@ static void ft_rotate(t_stack **stack)
     t_stack *node_to_rotate; // 1º nodo a mover
     t_stack *last_node;    
     int stack_len;
-
-    // VALIDACION INICIAL (no stack o no puntero stack)
-    if (stack == NULL || *stack == NULL)
+    
+    if (stack == NULL || *stack == NULL) // VALIDACION INICIAL ARGUMENTOS
         return ;
-    stack_len = ft_stack_len(*stack);    
+    stack_len = get_stack_len(*stack);    
     if (stack_len < 2) // VERIFICACION  TAMAÑO STACK MAYOR Q 1
         return ;
 
     node_to_rotate = *stack; 
     //printf("first_node-> %p \n", node_to_rotate);
-    last_node = ft_find_last_node(*stack);
+    last_node = find_last_node(*stack);
     //printf("last_node-> %p \n", last_node);    
 
     // TRANSFORMACION

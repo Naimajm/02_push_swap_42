@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 19:24:53 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/30 18:50:51 by juagomez         ###   ########.fr       */
+/*   Created: 2024/10/16 18:26:03 by juagomez          #+#    #+#             */
+/*   Updated: 2024/10/31 13:50:51 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	main(int argc, char **argv)
 {
-	// DECLARACION + INICIALIZACION LISTAS VINCULADAS 'STACKS
+	// DECLARACION + INICIALIZACION LISTAS VINCULADAS 'STACKS'
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 
@@ -25,7 +25,7 @@ int	main(int argc, char **argv)
 	if (argc == 1 || (argc == 2 && argv[1][0] == 0)) // ./push_swap "" // ARGUMENTOS VACIOS
 		return (0);
 	else if (argc == 2)  // INPUTS ARGUMENTOS POR STRING
-		argv = split(argv[1], ' '); // DIVISION ARGUMENTOS EN NUMEROS
+		argv = split_push_swap(argv[1], ' '); // DIVISION ARGUMENTOS EN NUMEROS
 
 	// IMPRIMIR ARGUMENTOS
 	/* int index = 0;
@@ -36,7 +36,7 @@ int	main(int argc, char **argv)
 	}	 */
 
 	// CREACION STACK + VALIDACION Y CONVERSION ARGUMENTOS	
-	stack_init(&stack_a, argv + 1);
+	init_stack(&stack_a, argv + 1);
 	
 	// IMPRESION STACK 'INICIAL'
 	/* t_stack *stack_copy_a;
@@ -47,16 +47,9 @@ int	main(int argc, char **argv)
 		stack_copy_a = stack_copy_a->next;
 	} */
 
-	// ALGORTIMO ORDENACION -> ORDENAR PARA 2, 3 O RESTO ELEMENTOS (push_swap())
-	//printf("main() -> stack_is_sorted-> %d \n", stack_is_sorted(stack_a));	
-	if (!stack_is_sorted(stack_a))
-	{
-		//printf("main()  push_swap() -> \n");
-		push_swap(&stack_a, &stack_b); // ordenar stack a -> mayor 3 elementos
-	}
-
-	//set_current_position(stack_a);
-	//set_current_position(stack_b);
+	// ALGORTIMO ORDENACION -> push_swap()
+	if (!is_stack_sorted(stack_a))
+		push_swap(&stack_a, &stack_b); 
 
 	// IMPRESION STACK 'ORDENADO'
 	/* t_stack *stack_copy_a;
@@ -73,8 +66,8 @@ int	main(int argc, char **argv)
 		printf( "main() stack a FINAL -> arg numero-> %d, index-> %d, \t current_position-> %d \t target_node-> %p \t above_median-> %d \n", stack_copy_b->value, stack_copy_b->index, stack_copy_b->current_position, stack_copy_b->target_node, stack_copy_b->above_median);
 		stack_copy_b = stack_copy_b->next;
 	}
- */
+ 	*/
 	// LIBERAR MEMORIA STACK
-	ft_free_stack(&stack_a);
+	free_stack(&stack_a);
 	return (0);
 }
