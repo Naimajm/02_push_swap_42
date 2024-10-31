@@ -67,7 +67,6 @@ all: $(NAME) # receta predeterminada
 $(NAME): $(LIBRARY) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
 	@echo "$(ORANGE)📌​ Compiling $(NAME)... $(DEF_COLOR)"
 	$(CC) ${CFLAGS} $^ -o $(NAME)
-##$(MAKE_LIBRARY) $(NAME) $(OBJ_FILES) 
 	@echo "$(DARK_GREEN)$(NAME) has been created ✓$(DEF_COLOR)"
 
 # FUNCION SECUNDARIA -> LIBRERIA 'push_swap.a' para exe 'push_swap' y 'checker' bonus

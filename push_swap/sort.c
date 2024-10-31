@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 12:28:06 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/31 12:37:00 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 18:18:53 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,6 @@ static void ft_get_index(t_stack *stack)
 	int	highest_number;
 	int	current_index;
 
-	if (stack == NULL) //VALIDACION INICIAL ARGUMENTOS
-		return ;
 	current_index = get_stack_len(stack);
 
 	while (current_index)

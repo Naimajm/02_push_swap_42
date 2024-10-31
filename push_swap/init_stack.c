@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 12:15:28 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/31 12:38:00 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 17:41:25 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,9 @@ void	init_stack(t_stack **stack, char **argv)
 		//printf("stack_init() -> number atol()-> %li \n", number);
 
 		// VALIDACION NUMEROS ENTEROS MAXIMOS Y MINIMOS -> NUMEROS NO VALIDOS
-		if ( number < INT_MIN || number > INT_MAX )
-		{
-			ft_putstr_fd("Error\n", 2);
-			free_stack(stack);
-			exit(1);
-		}
 		// VALIDACION NUMBER CON NUMEROS EN LOS NODOS YA CREADOS
-		if (check_duplicate_numbers(*stack, (int)number))
+		if (check_duplicate_numbers(*stack, (int)number)
+			|| number < INT_MIN || number > INT_MAX)
 		{
 			ft_putstr_fd("Error\n", 2);
 			free_stack(stack);
