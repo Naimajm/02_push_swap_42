@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 21:59:55 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/26 20:55:39 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 19:50:46 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,31 +14,31 @@
 
 static char	*get_final_part_line(char *total_line)
 {
-	int		i_buffer;
+	int		buffer;
 	int		index_final_line;
-	char	*final_line;
+	char	*final_l;
 
-	i_buffer = 0;
+	buffer = 0;
 	index_final_line = 0;
-	while (total_line[i_buffer] != '\0' && total_line[i_buffer] != '\n')
-		i_buffer++;
-	if (!total_line[i_buffer])
+	while (total_line[buffer] != '\0' && total_line[buffer] != '\n')
+		buffer++;
+	if (!total_line[buffer])
 	{
 		free(total_line);
 		return (NULL);
 	}
-	final_line = ft_calloc(ft_strlen_next_line(total_line) - i_buffer + 1, sizeof(char));
-	if (!final_line)
+	final_l = ft_calloc(ft_strlen_n(total_line) - buffer + 1, sizeof(char));
+	if (!final_l)
 		return (NULL);
-	while (total_line[i_buffer] != '\0')
+	while (total_line[buffer] != '\0')
 	{
-		final_line[index_final_line] = total_line[i_buffer + 1];
-		i_buffer++;
+		final_l[index_final_line] = total_line[buffer + 1];
+		buffer++;
 		index_final_line++;
 	}
-	final_line[index_final_line] = '\0';
+	final_l[index_final_line] = '\0';
 	free(total_line);
-	return (final_line);
+	return (final_l);
 }
 
 static char	*get_cleaned_line(char *buffer)
