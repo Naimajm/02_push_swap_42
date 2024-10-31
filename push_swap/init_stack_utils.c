@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   stack_utils.c                                      :+:      :+:    :+:   */
+/*   init_stack_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/13 14:11:52 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/28 14:31:16 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:37:00 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void    ft_append_node(t_stack **stack, int number)
+void    append_node(t_stack **stack, int number)
 {
     t_stack *node;
 	t_stack	*last_node;
@@ -36,24 +36,31 @@ void    ft_append_node(t_stack **stack, int number)
 	}
 	else
 	{
-		last_node = ft_find_last_node(*stack);
+		last_node = find_last_node(*stack);
 		last_node->next = node;
 		node->prev = last_node;
 	}    
 }
 
-t_stack	*find_cheapest_node(t_stack *stack)
-{	
-	if (stack == NULL) // VALIDACION INICIAL PARAMETROS
+t_stack	*find_highest_node(t_stack *stack)
+{
+	int	highest_number;
+	t_stack	*highest_node;
+	
+	if (stack == NULL) //VALIDACION INICIAL ARGUMENTOS
 		return (NULL);
-	while (stack)
+	highest_number = INT_MIN;
+	while (stack != NULL)
 	{
-		if (stack->cheapest_cost == true)
-			return (stack);
+		if (stack->value > highest_number)
+		{
+			highest_number = stack->value; // cambio a num temporal + alto 
+			highest_node = stack;  // capturamos nodo del num temporal + alto
+		}
 		stack = stack->next;
 	}
-	return (NULL);
-}
+	return (highest_node);
+} 
 
 t_stack	*find_smallest_node(t_stack *stack)
 {
@@ -76,7 +83,7 @@ t_stack	*find_smallest_node(t_stack *stack)
 	return (smallest_node);
 }
 
-t_stack	*ft_find_last_node(t_stack *node)
+t_stack	*find_last_node(t_stack *node)
 {	
 	if (node == NULL) // VALIDACION INICIAL PARAMETROS
 		return (NULL);
@@ -87,7 +94,7 @@ t_stack	*ft_find_last_node(t_stack *node)
 	return (node); 
 }
 
-int	ft_stack_len(t_stack *stack)
+int	get_stack_len(t_stack *stack)
 {
 	int	len;
 

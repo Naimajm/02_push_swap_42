@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split.c                                            :+:      :+:    :+:   */
+/*   init_split.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 11:38:00 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/24 19:02:37 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/10/31 12:55:11 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	*get_next_word(char *str, char separator)
  * 				 |->[..]->"..""
  * 				 |->[NULL]
 */
-char	**split(char *str, char separator)
+char	**split_push_swap(char *str, char separator)
 {
 	int		words_number;
 	char	**vector_strings;
