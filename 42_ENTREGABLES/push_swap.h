@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 19:24:48 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/31 17:59:54 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/11/15 00:04:58 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 // #include <stdio.h>
 
-# include "../libft/libft.h"
+# include "./libft/libft.h"
 
 typedef struct s_stack
 {

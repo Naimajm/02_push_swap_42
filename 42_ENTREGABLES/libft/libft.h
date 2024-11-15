@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/30 15:24:19 by juagomez          #+#    #+#             */
-/*   Updated: 2024/11/15 00:00:54 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/11/15 01:37:55 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-
 
 int				ft_isalpha(int caracter);
 
@@ -87,7 +86,6 @@ void			ft_putstr_fd(char *str, int fd);
 void			ft_putendl_fd(char *str, int fd);
 
 void			ft_putnbr_fd(int num, int fd);
-
 
 typedef struct s_list
 {

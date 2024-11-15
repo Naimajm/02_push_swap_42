@@ -26,24 +26,24 @@ CFLAGS := -Wall -Wextra -Werror
 MAKE_LIBRARY = ar -rcs
 
 LIBFT_DIR	:= ../libft
-PUSH_SWAP_DIR := ../push_swap
+PUSH_SWAP_DIR := ..
 GET_NEXT_LINE_DIR := ../get_next_line
 
 LIBFT_ARCHIVE := libft.a
 PUSH_SWAP_ARCHIVE := push_swap.a
 GET_NEXT_LINE_ARCHIVE := get_next_line.a
 
-SRC := checker.c \
+SRC := checker_bonus.c \
 
 OBJ_FILES := $(SRC:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(OBJ_FILES) $(GET_NEXT_LINE_DIR)/$(GET_NEXT_LINE_ARCHIVE) $(PUSH_SWAP_DIR)/$(PUSH_SWAP_ARCHIVE) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
+$(NAME):  $(OBJ_FILES) $(LIBFT_ARCHIVE) $(PUSH_SWAP_ARCHIVE) $(GET_NEXT_LINE_ARCHIVE)
 	@echo "$(ORANGE)📌​ Compiling $(NAME)... $(DEF_COLOR)"
 
-	$(CC) ${CFLAGS} $^ -o $(NAME)
-	cp $(NAME) ../push_swap 
+	$(CC) ${CFLAGS} $(OBJ_FILES) $(PUSH_SWAP_DIR)/$(PUSH_SWAP_ARCHIVE) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)  $(GET_NEXT_LINE_DIR)/$(GET_NEXT_LINE_ARCHIVE) -o $(NAME)
+	cp $(NAME) $(PUSH_SWAP_DIR)/ 
 
 	@echo "$(DARK_GREEN)$(NAME) has been created ✓$(DEF_COLOR)"
 
@@ -60,7 +60,7 @@ $(PUSH_SWAP_ARCHIVE) :
 $(GET_NEXT_LINE_ARCHIVE) :
 	@echo "$(ORANGE)📌​ Compiling $(GET_NEXT_LINE_ARCHIVE) library... $(DEF_COLOR)"
 	cd $(GET_NEXT_LINE_DIR) && make
-	@echo "$(DARK_GREEN) $(GET_NEXT_LINE_ARCHIVE)line library created ✓ $(DEF_COLOR)"
+	@echo "$(DARK_GREEN) $(GET_NEXT_LINE_ARCHIVE) library created ✓ $(DEF_COLOR)"
 
 clean:
 	@echo "${ORANGE}🗑️​ Removing object files...${NAME}...${DEF_COLOR}"

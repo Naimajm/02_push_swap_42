@@ -26,9 +26,11 @@ CC := cc
 CFLAGS := -Wall -Wextra -Werror
 MAKE_LIBRARY := ar -rcs
 
-LIBFT_DIR := ../libft
-
+LIBFT_DIR := ./libft
 LIBFT_ARCHIVE := libft.a
+
+NAME_BONUS = checker
+BONUS_DIR := ./bonus
 
 SRC := init_split.c init_stack.c init_stack_utils.c \
 command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
@@ -39,26 +41,34 @@ OBJ_FILES := $(SRC:%.c=%.o)
 
 all: $(NAME)
 
-$(NAME): $(LIBRARY) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
+$(NAME): $(LIBFT_ARCHIVE) $(LIBRARY)
 	@echo "$(ORANGE)📌​ Compiling $(NAME)... $(DEF_COLOR)"
-	$(CC) ${CFLAGS} $^ -o $(NAME)
+	$(CC) ${CFLAGS} $(LIBRARY) $(LIBFT_DIR)/$(LIBFT_ARCHIVE) -o $(NAME)
 	@echo "$(DARK_GREEN)$(NAME) has been created ✓$(DEF_COLOR)"
 
-$(LIBRARY) : $(OBJ_FILES) 
+$(LIBRARY) : $(OBJ_FILES)
 	@echo "$(ORANGE)📌​ Compiling $(LIBRARY)... $(DEF_COLOR)"
-	$(MAKE_LIBRARY) $(LIBRARY) $^ 
+	$(MAKE_LIBRARY) $(LIBRARY) $^
 	@echo "$(DARK_GREEN) $(LIBRARY) library created ✓ $(DEF_COLOR)"
 
-$(LIBFT_ARCHIVE) :
+$(LIBFT_ARCHIVE):
 	@echo "$(ORANGE)📌​ Compiling $(LIBFT_ARCHIVE) library... $(DEF_COLOR)"
 	cd ${LIBFT_DIR} && make
 	@echo "$(DARK_GREEN) $(LIBFT_ARCHIVE) library created ✓ $(DEF_COLOR)"
+
+## BONUS ---------------------------------------------------------
+
+bonus: $(NAME_BONUS)
+
+$(NAME_BONUS): 
+	@echo "$(ORANGE)📌​ Compiling $(NAME_BONUS)... $(DEF_COLOR)"
+	cd $(BONUS_DIR) && make
+	@echo "$(DARK_GREEN)$(NAME_BONUS) has been created ✓$(DEF_COLOR)"
 
 clean:
 	@echo "${ORANGE}🗑️​ Removing object files...${NAME}...${DEF_COLOR}"
 	rm -f $(OBJ_FILES)
 	@echo "${DARK_GREEN}Cleaning objects ${NAME}...is done! ${DEF_COLOR}"
-
 
 fclean: clean
 	@echo "${ORANGE}🗑️ Removing files...${NAME} and $(LIBRARY)... ${DEF_COLOR}"
