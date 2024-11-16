@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:23:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/11/16 11:42:00 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:55:23 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,30 +52,29 @@ static void	free_all_stack(t_stack **stack_a, t_stack **stack_b)
 
 int	main(int argc, char **argv)
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+	t_stack	*a;
+	t_stack	*b;
 	char	*next_line;
-	int		stack_len;
+	int		l;
 
-	stack_a = NULL;
-	stack_b = NULL;
+	a = NULL;
+	b = NULL;
 	if (argc == 1)
 		return (0);
-	else if (argc == 2)
+	else if (argc == 2 && !(argv[1][0] == 0))
 		argv = split_push_swap(argv[1], ' ');
-	init_stack(&stack_a, argv + 1);
-	stack_len = get_stack_len(stack_a);
+	init_stack(&a, argv + 1);
+	l = get_stack_len(a);
 	next_line = get_next_line(STDIN_FILENO);
 	while (next_line)
 	{
-		check_command(&stack_a, &stack_b, next_line);
+		check_command(&a, &b, next_line);
 		free(next_line);
-		next_line = get_next_line(STDIN_FILENO);		
+		next_line = get_next_line(STDIN_FILENO);
 	}
-	if ((is_stack_sorted(stack_a)) && (stack_len == get_stack_len(stack_a))
-		&& get_stack_len(stack_a) > 0)
+	if ((is_stack_sorted(a)) && l == get_stack_len(a) && get_stack_len(a) > 0)
 		ft_putstr_fd("OK\n", 1);
 	else
 		ft_putstr_fd("KO\n", 1);
-	free_stack(&stack_a);
+	free_stack(&a);
 }
