@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:26:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/10/31 17:52:23 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:04:29 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,13 @@ int	main(int argc, char **argv)
 
 	stack_a = NULL;
 	stack_b = NULL;
-	if (argc == 1 || (argc == 2 && argv[1][0] == 0))
+	if (argc == 1)	
 		return (0);
+	if (argc == 2 && argv[1][0] == 0)
+	{
+		ft_putstr_fd("Error\n", 2);
+		exit(1);
+	}
 	else if (argc == 2)
 		argv = split_push_swap(argv[1], ' ');
 	init_stack(&stack_a, argv + 1);
