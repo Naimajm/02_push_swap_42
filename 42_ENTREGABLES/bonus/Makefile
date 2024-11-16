@@ -43,7 +43,7 @@ $(NAME):  $(OBJ_FILES) $(LIBFT_ARCHIVE) $(PUSH_SWAP_ARCHIVE) $(GET_NEXT_LINE_ARC
 	@echo "$(ORANGE)📌​ Compiling $(NAME)... $(DEF_COLOR)"
 
 	$(CC) ${CFLAGS} $(OBJ_FILES) $(PUSH_SWAP_DIR)/$(PUSH_SWAP_ARCHIVE) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)  $(GET_NEXT_LINE_DIR)/$(GET_NEXT_LINE_ARCHIVE) -o $(NAME)
-	cp $(NAME) $(PUSH_SWAP_DIR)/ 
+	@cp $(NAME) $(PUSH_SWAP_DIR)/ 
 
 	@echo "$(DARK_GREEN)$(NAME) has been created ✓$(DEF_COLOR)"
 
@@ -64,13 +64,15 @@ $(GET_NEXT_LINE_ARCHIVE) :
 
 clean:
 	@echo "${ORANGE}🗑️​ Removing object files...${NAME}...${DEF_COLOR}"
-	rm -f $(OBJ_FILES)
+	@rm -f $(OBJ_FILES)
+	@cd $(GET_NEXT_LINE_DIR) && $(MAKE) clean
 	@echo "${DARK_GREEN}Cleaning objects ${NAME}...is done! ${DEF_COLOR}"
 
 fclean: clean
 	@echo "${ORANGE}🗑️ Removing files...${NAME}... ${DEF_COLOR}"
-	rm -f $(NAME)
-	cd $(PUSH_SWAP_DIR) && rm -f $(NAME)
+	@rm -f $(NAME)
+	@cd $(PUSH_SWAP_DIR) &&  rm -f $(NAME)
+	@cd $(GET_NEXT_LINE_DIR) && $(MAKE) fclean
 	@echo "${DARK_GREEN}Cleaning ${NAME} is done! ${DEF_COLOR}"
 
 re: fclean all

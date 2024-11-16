@@ -33,9 +33,9 @@ NAME_BONUS = checker
 BONUS_DIR := ./bonus
 
 SRC := init_split.c init_stack.c init_stack_utils.c \
-command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
-sort.c sort_node_init.c sort_node_move.c \
-main_push_swap.c main.c \
+	command_push.c command_rotate.c command_reverse_rotate.c command_swap.c \
+	sort.c sort_node_init.c sort_node_move.c \
+	main_push_swap.c main.c \
 
 OBJ_FILES := $(SRC:%.c=%.o)
 
@@ -49,11 +49,11 @@ $(NAME): $(LIBFT_ARCHIVE) $(LIBRARY)
 $(LIBRARY) : $(OBJ_FILES)
 	@echo "$(ORANGE)📌​ Compiling $(LIBRARY)... $(DEF_COLOR)"
 	$(MAKE_LIBRARY) $(LIBRARY) $^
-	@echo "$(DARK_GREEN) $(LIBRARY) library created ✓ $(DEF_COLOR)"
+	@echo "$(DARK_GREEN)$(LIBRARY) library created ✓ $(DEF_COLOR)"
 
 $(LIBFT_ARCHIVE):
 	@echo "$(ORANGE)📌​ Compiling $(LIBFT_ARCHIVE) library... $(DEF_COLOR)"
-	cd ${LIBFT_DIR} && make
+	@cd ${LIBFT_DIR} && make
 	@echo "$(DARK_GREEN) $(LIBFT_ARCHIVE) library created ✓ $(DEF_COLOR)"
 
 ## BONUS ---------------------------------------------------------
@@ -61,24 +61,29 @@ $(LIBFT_ARCHIVE):
 bonus: $(NAME_BONUS)
 
 $(NAME_BONUS): 
-	@echo "$(ORANGE)📌​ Compiling $(NAME_BONUS)... $(DEF_COLOR)"
+	@echo "$(ORANGE)📌​ Compiling bonus...$(NAME_BONUS)... $(DEF_COLOR)"
 	cd $(BONUS_DIR) && make
 	@echo "$(DARK_GREEN)$(NAME_BONUS) has been created ✓$(DEF_COLOR)"
 
 clean:
 	@echo "${ORANGE}🗑️​ Removing object files...${NAME}...${DEF_COLOR}"
-	rm -f $(OBJ_FILES)
+	@rm -f $(OBJ_FILES)
+	@echo "${ORANGE}🗑️​ Removing object files...${LIBFT_ARCHIVE}...${DEF_COLOR}"
+	@cd $(LIBFT_DIR) && $(MAKE) clean
+	@cd $(BONUS_DIR) && $(MAKE) clean
 	@echo "${DARK_GREEN}Cleaning objects ${NAME}...is done! ${DEF_COLOR}"
 
 fclean: clean
 	@echo "${ORANGE}🗑️ Removing files...${NAME} and $(LIBRARY)... ${DEF_COLOR}"
-	rm -f $(NAME)
-	rm -f $(LIBRARY)
+	@rm -f $(NAME)
+	@rm -f $(LIBRARY)
+	@cd $(LIBFT_DIR) && $(MAKE) fclean
+	@cd $(BONUS_DIR) && $(MAKE) fclean
 	@echo "${DARK_GREEN}Cleaning ${NAME} is done! ${DEF_COLOR}"
 
-re: fclean all 
-	make clean
+re: fclean all
+	@make clean
 	@echo "${DARK_GREEN}🗑️ Cleaning $(NAME) is done and 📌 $(NAME) has been created✓! ${DEF_COLOR}"	
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re bonus
 
