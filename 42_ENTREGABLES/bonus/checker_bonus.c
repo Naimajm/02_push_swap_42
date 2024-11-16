@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:23:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/11/15 09:27:26 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/11/16 11:42:00 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ static void	check_command(t_stack **stack_a, t_stack **stack_b, char *command)
 
 static void	free_all_stack(t_stack **stack_a, t_stack **stack_b)
 {
-	free_stack(stack_a);
-	free_stack(stack_b);
+	if (!stack_a)
+		free_stack(stack_a);
+	if (!stack_b)
+		free_stack(stack_b);
 	ft_putstr_fd("Error\n", 2);
 	exit(1);
 }
@@ -67,7 +69,8 @@ int	main(int argc, char **argv)
 	while (next_line)
 	{
 		check_command(&stack_a, &stack_b, next_line);
-		next_line = get_next_line(STDIN_FILENO);
+		free(next_line);
+		next_line = get_next_line(STDIN_FILENO);		
 	}
 	if ((is_stack_sorted(stack_a)) && (stack_len == get_stack_len(stack_a))
 		&& get_stack_len(stack_a) > 0)
