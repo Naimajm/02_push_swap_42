@@ -3,6 +3,7 @@ intro -> https://42-cursus.gitbook.io/guide/rank-02/push_swap/building-the-thing
 
 #### Conceptos
 lista vinculada -> https://es.wikipedia.org/wiki/Lista_enlazada
+
 otra resolucion ordenacion ->https://medium.com/@ayogun/push-swap-c1f5d2d41e97
 
 #### Algoritmo Oceano -> 500 numeros > 5500 operaciones
