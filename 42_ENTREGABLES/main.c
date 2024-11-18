@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 18:26:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/11/18 09:42:06 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/11/18 19:25:00 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	main(int argc, char **argv)
 
 	stack_a = NULL;
 	stack_b = NULL;
-	split_args = NULL;
 	split_args = parse_arguments(argc, argv);
 	if (split_args)
 		argv = split_args;
