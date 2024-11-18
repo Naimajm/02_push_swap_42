@@ -6,7 +6,7 @@
 /*   By: juagomez <juagomez@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/24 13:23:03 by juagomez          #+#    #+#             */
-/*   Updated: 2024/11/18 20:03:19 by juagomez         ###   ########.fr       */
+/*   Updated: 2024/11/18 20:10:26 by juagomez         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 	t_stack	*stack_a;
 	t_stack	*stack_b;
 	char	**split_args;
-	int		error_flag;
+	int		command_error;
 
 	stack_a = NULL;
 	stack_b = NULL;
@@ -30,10 +30,10 @@ int	main(int argc, char **argv)
 	if (split_args)
 		argv = split_args;
 	init_stack(&stack_a, argv + 1);
-	error_flag = process_commands(&stack_a, &stack_b);
+	command_error = process_commands(&stack_a, &stack_b);
 	if ((is_stack_sorted(stack_a)) && get_stack_len(stack_a) > 0)
 		ft_putstr_fd("OK\n", 1);
-	else if (!is_stack_sorted(stack_a) && !error_flag)
+	else if (!is_stack_sorted(stack_a) && !command_error)
 		ft_putstr_fd("KO\n", 1);
 	free_stack(&stack_a);
 	free_stack(&stack_b);
@@ -53,32 +53,32 @@ static char	**parse_arguments_checker(int argc, char **argv)
 		split_args = split_push_swap(argv[1], ' ');
 		return (split_args);
 	}
-    return (NULL);
+	return (NULL);
 }
 
 static int	process_commands(t_stack **stack_a, t_stack **stack_b)
 {
 	char	*next_line;
-	int 	error_command;
+	int		command_error;
 
-	error_command = 0;
+	command_error = 0;
 	next_line = get_next_line(STDIN_FILENO);
 	while (next_line)
 	{
-		error_command = check_command(stack_a, stack_b, next_line);
-		if (error_command)
+		command_error = check_command(stack_a, stack_b, next_line);
+		if (command_error)
 			ft_putstr_fd("Error\n", 2);
 		free(next_line);
 		next_line = get_next_line(STDIN_FILENO);
 	}
 	free(next_line);
-	return (error_command);
+	return (command_error);
 }
 
 static int	check_command(t_stack **stack_a, t_stack **stack_b, char *command)
 {
-	int	error_command;
-	
+	int	command_error;
+
 	if (ft_strncmp(command, "pa\n", ft_strlen("pa\n")) == 0)
 		pa(stack_a, stack_b, false);
 	else if (ft_strncmp(command, "pb\n", ft_strlen("pb\n")) == 0)
@@ -100,8 +100,8 @@ static int	check_command(t_stack **stack_a, t_stack **stack_b, char *command)
 	else if (ft_strncmp(command, "sb\n", ft_strlen("sb\n")) == 0)
 		sb(stack_b, false);
 	else
-		return (error_command = 1);
-	return (error_command = 0);
+		return (command_error = 1);
+	return (command_error = 0);
 }
 
 static void	free_split_argvs(char **split_args)
