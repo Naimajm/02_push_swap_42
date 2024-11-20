@@ -29,14 +29,14 @@ DARK_YELLOW         = \033[38;5;143m
 # NOMBRE SALIDA ARCHIVO COMPILADO
 NAME = checker
 
-CC := cc # nombre compilador
-CFLAGS := -Wall -Wextra -Werror # flags de compilacion
+CC := cc
+CFLAGS := -Wall -Wextra -Werror
 MAKE_LIBRARY = ar -rcs # COMPRESION A 1 ARCHIVO -> LIBRERIAS .a
 
 # DIRECTORIOS -----------------------------------------
 # ---------------------------------------------------
 LIBFT_DIR	:= ../libft
-PUSH_SWAP_DIR := ../push_swap
+PUSH_SWAP_DIR := ..
 GET_NEXT_LINE_DIR := ../get_next_line
 
 # ARCHIVOS LIBRERIAS -----------------------------------------
@@ -48,25 +48,21 @@ GET_NEXT_LINE_ARCHIVE := get_next_line.a
 # RECURSOS -----------------------------------------
 # ---------------------------------------------------
 # LISTADO FUNCIONES A INCLUIR EN BIBLIOTECA
-SRC := checker.c \
+SRC := checker_bonus.c \
 
 OBJ_FILES := $(SRC:%.c=%.o) # LISTA ARCHIVOS .O SEGUN ARCHIVO C
 
 # RECETAS -----------------------------------------
 # ---------------------------------------------------.
 
-all: $(NAME) # receta predeterminada
-
-# $< is used to get the first dependency.
-# $@ is used to get the target.
-# -c flag is used to compile the source files.
+all: $(NAME)
 
 # FUNCION PPAL -> CREACION ARCHIVO COMPILACION "CHECKER" Y COPIA EN CARPETA 'push_swap'
-$(NAME): $(OBJ_FILES) $(GET_NEXT_LINE_DIR)/$(GET_NEXT_LINE_ARCHIVE) $(PUSH_SWAP_DIR)/$(PUSH_SWAP_ARCHIVE) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)
+$(NAME):  $(OBJ_FILES) $(LIBFT_ARCHIVE) $(PUSH_SWAP_ARCHIVE) $(GET_NEXT_LINE_ARCHIVE)
 	@echo "$(ORANGE)📌​ Compiling $(NAME)... $(DEF_COLOR)"
 
-	$(CC) ${CFLAGS} $^ -o $(NAME)
-	cp $(NAME) ../push_swap 
+	$(CC) ${CFLAGS} $(OBJ_FILES) $(PUSH_SWAP_DIR)/$(PUSH_SWAP_ARCHIVE) $(LIBFT_DIR)/$(LIBFT_ARCHIVE)  $(GET_NEXT_LINE_DIR)/$(GET_NEXT_LINE_ARCHIVE) -o $(NAME)
+	@cp $(NAME) $(PUSH_SWAP_DIR)/ 
 
 	@echo "$(DARK_GREEN)$(NAME) has been created ✓$(DEF_COLOR)"
 
@@ -86,21 +82,20 @@ $(PUSH_SWAP_ARCHIVE) :
 $(GET_NEXT_LINE_ARCHIVE) :
 	@echo "$(ORANGE)📌​ Compiling $(GET_NEXT_LINE_ARCHIVE) library... $(DEF_COLOR)"
 	cd $(GET_NEXT_LINE_DIR) && make
-	@echo "$(DARK_GREEN) $(GET_NEXT_LINE_ARCHIVE)line library created ✓ $(DEF_COLOR)"
+	@echo "$(DARK_GREEN) $(GET_NEXT_LINE_ARCHIVE) library created ✓ $(DEF_COLOR)"
 
 # RECETA BORRAR ARCHIVOS '.o' -> '-f' ignora error si no encuentra archivos y elimina sin solicitar confirmacion
 clean:
 	@echo "${ORANGE}🗑️​ Removing object files...${NAME}...${DEF_COLOR}"
-	rm -f $(OBJ_FILES)
+	@rm -f $(OBJ_FILES)
+	@cd $(GET_NEXT_LINE_DIR) && $(MAKE) clean
 	@echo "${DARK_GREEN}Cleaning objects ${NAME}...is done! ${DEF_COLOR}"
 
-# ejecuta clean + borrado archivo '.a'
 fclean: clean
 	@echo "${ORANGE}🗑️ Removing files...${NAME}... ${DEF_COLOR}"
-	rm -f $(NAME)
-#cd $(LIBFT_DIR) && rm -f $(NAME)
-#cd $(GET_NEXT_LINE_DIR) && rm -f $(NAME)
-	cd $(PUSH_SWAP_DIR) && rm -f $(NAME)
+	@rm -f $(NAME)
+	@cd $(PUSH_SWAP_DIR) &&  rm -f $(NAME)
+	@cd $(GET_NEXT_LINE_DIR) && $(MAKE) fclean
 	@echo "${DARK_GREEN}Cleaning ${NAME} is done! ${DEF_COLOR}"
 
 # RECOMPILACION -----------------------------------------
